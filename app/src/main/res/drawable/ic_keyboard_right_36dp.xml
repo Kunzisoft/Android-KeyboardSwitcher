@@ -19,7 +19,6 @@
                 android:strokeLineJoin="round"
                 android:fillColor="#373737"
                 android:strokeMiterLimit="4"
-                android:fillAlpha="0.3538462"
                 android:strokeLineCap="round" />
         </group>
     </group>

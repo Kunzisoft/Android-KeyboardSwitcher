@@ -1,7 +1,5 @@
 package com.kunzisoft.keyboard.switcher;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
  */
 public class KeyboardManagerActivity extends AppCompatActivity {
 
+    private InputMethodManager imeManager;
     private View rootView;
     private AppCompatDialog dialogUtility;
 
@@ -23,11 +22,12 @@ public class KeyboardManagerActivity extends AppCompatActivity {
         setContentView(R.layout.empty);
         rootView = findViewById(R.id.root_view);
 
+        imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
         // Only to show input method picker
         dialogUtility = new AppCompatDialog(this, android.R.style.Theme_Panel);
         if (dialogUtility.getWindow() != null) {
-            dialogUtility.getWindow().setTitle(null);
-            dialogUtility.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLUE));
+            dialogUtility.getWindow().setTitle("");
         }
         dialogUtility.setCanceledOnTouchOutside(true);
         dialogUtility.setCancelable(true);
@@ -38,16 +38,15 @@ public class KeyboardManagerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        rootView.post(new Runnable() {
+        rootView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 if (imeManager != null) {
                     imeManager.showInputMethodPicker();
-                    imeManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                 }
+                finish();
             }
-        });
+        }, 100);
     }
 
     @Override

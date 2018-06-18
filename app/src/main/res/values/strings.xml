@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Keyboard Switcher</string>
+
+    <string name="settings_ime_available_key">settings_ime_available_key</string>
+    <string name="settings_ime_available_title">Available keyboards</string>
+
+    <string name="settings_position_button_key">settings_position_button_key</string>
+    <string name="settings_position_button_title">Button position</string>
+    <string name="settings_position_button_description">Button position at right</string>
+
+    <string name="settings_colors_key">settings_colors_key</string>
+    <string name="settings_colors_title">Button colors</string>
+    <string name="settings_colors_description">Floating keyboard button with color [color]</string>
 </resources>

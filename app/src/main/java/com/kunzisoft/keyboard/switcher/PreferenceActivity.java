@@ -8,7 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class PreferenceActivity extends AppCompatActivity {
 
     /* https://stackoverflow.com/questions/7569937/unable-to-add-window-android-view-viewrootw44da9bc0-permission-denied-for-t
         code to post/handler request for permission
@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.preference_activity);
+
         service = new Intent(this, OverlayShowingService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkDrawOverlayPermission();
@@ -28,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
             startServiceAndFinishActivity();
         }
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new PreferenceFragment())
+                .commit();
+
     }
 
     private void startServiceAndFinishActivity() {
         startService(service);
-        finish();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

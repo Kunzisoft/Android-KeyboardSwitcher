@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+		android:title="@string/app_name">
+        <Preference
+            android:key="@string/settings_ime_available_key"
+            android:title="@string/settings_ime_available_title"
+			android:persistent="false" />
+		<SwitchPreference
+			android:key="@string/settings_position_button_key"
+			android:title="@string/settings_position_button_title"
+            android:defaultValue="true"/>
+        <com.kunzisoft.androidclearchroma.ChromaPreferenceCompat
+            xmlns:chroma="http://schemas.android.com/apk/res-auto"
+            android:key="@string/settings_colors_key"
+            android:title="@string/settings_colors_title"
+            android:summary="@string/settings_colors_description"
+            chroma:chromaShapePreview="CIRCLE"
+            chroma:chromaColorMode="ARGB"
+            chroma:chromaIndicatorMode="HEX"
+            chroma:chromaInitialColor="@color/colorPrimary"/>
+	</PreferenceCategory>
+
+</PreferenceScreen>
