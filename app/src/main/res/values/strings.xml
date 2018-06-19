@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Keyboard Switcher</string>
 
+    <string name="hint_text_test">test area</string>
+
     <string name="general">General</string>
 
     <string name="settings_launch_startup_key">settings_launch_startup</string>

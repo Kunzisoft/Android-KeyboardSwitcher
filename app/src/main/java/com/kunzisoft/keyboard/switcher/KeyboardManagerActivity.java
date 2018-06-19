@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager;
  */
 public class KeyboardManagerActivity extends AppCompatActivity {
 
-    private InputMethodManager imeManager;
     private View rootView;
     private AppCompatDialog dialogUtility;
 
@@ -21,8 +20,6 @@ public class KeyboardManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.empty);
         rootView = findViewById(R.id.root_view);
-
-        imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         // Only to show input method picker
         dialogUtility = new AppCompatDialog(this, android.R.style.Theme_Panel);
@@ -41,10 +38,16 @@ public class KeyboardManagerActivity extends AppCompatActivity {
         rootView.postDelayed(new Runnable() {
             @Override
             public void run() {
+                InputMethodManager imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 if (imeManager != null) {
                     imeManager.showInputMethodPicker();
                 }
-                finish();
+                rootView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 100);
             }
         }, 100);
     }
