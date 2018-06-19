@@ -3,10 +3,10 @@ package com.kunzisoft.keyboard.switcher;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 public class PreferenceActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class PreferenceActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkDrawOverlayPermission();
         } else {
-            startServiceAndFinishActivity();
+            startService();
         }
 
         getSupportFragmentManager().beginTransaction()
@@ -37,7 +37,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
     }
 
-    private void startServiceAndFinishActivity() {
+    private void startService() {
         startService(service);
     }
 
@@ -51,7 +51,7 @@ public class PreferenceActivity extends AppCompatActivity {
             /* request permission via start activity for result */
             startActivityForResult(intent, REQUEST_CODE);
         } else {
-            startServiceAndFinishActivity();
+            startService();
         }
     }
 
@@ -64,7 +64,7 @@ public class PreferenceActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(this)
                         && service != null) {
-                    startServiceAndFinishActivity();
+                    startService();
                 }
             }
         }

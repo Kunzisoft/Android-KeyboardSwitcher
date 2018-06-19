@@ -3,6 +3,7 @@
     package="com.kunzisoft.keyboard.switcher">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:label="@string/app_name"
@@ -10,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="false"
         android:theme="@style/Theme.Transparent" >
+
         <activity
             android:name=".PreferenceActivity"
             android:exported="true"
@@ -21,9 +23,21 @@
         </activity>
         <activity android:name=".KeyboardManagerActivity"
             android:label=""/>
+        <activity android:name=".BootUpActivity"
+            android:label="" />
+        <receiver android:enabled="true" android:name=".BootUpReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".OverlayShowingService">
         </service>
+
     </application>
 
 </manifest>

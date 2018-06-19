@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Keyboard Switcher</string>
 
+    <string name="general">General</string>
+
+    <string name="settings_launch_startup_key">settings_launch_startup</string>
+    <string name="settings_launch_startup_title">Launch at startup</string>
+    <string name="settings_launch_startup_description">Launch the app at startup</string>
+
+    <string name="floating_button">Floating keyboard button</string>
+
     <string name="settings_ime_available_key">settings_ime_available_key</string>
     <string name="settings_ime_available_title">Available keyboards</string>
 
