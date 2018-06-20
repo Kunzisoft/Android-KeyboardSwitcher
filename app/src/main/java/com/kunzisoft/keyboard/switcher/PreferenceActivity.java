@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class PreferenceActivity extends AppCompatActivity {
 
@@ -52,6 +54,28 @@ public class PreferenceActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE);
         } else {
             startService();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.contribution, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch ( item.getItemId() ) {
+            case R.id.menu_contribute:
+                String url = "https://www.kunzisoft.com/donation";
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW);
+                intentUrl.setData(Uri.parse(url));
+                startActivity(intentUrl);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

@@ -21,4 +21,6 @@
     <string name="settings_colors_key">settings_colors_key</string>
     <string name="settings_colors_title">Button colors</string>
     <string name="settings_colors_description">Floating keyboard button with color [color]</string>
+
+    <string name="donate">Donate</string>
 </resources>
