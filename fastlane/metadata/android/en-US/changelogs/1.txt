@@ -1,0 +1,5 @@
+ * Display a floating keyboard selection button
+ * Display of available keyboards
+ * Setting for launching the application at startup
+ * Setting for the position of the floating button
+ * Setting for the color of the floating button with transparency

@@ -1,0 +1,7 @@
+<b>Keyboard Switcher est une application de sélection de clavier</b>, elle permet de <b>switcher facilement</b> du clavier courant à un autre grace à un bouton flottant discret toujours disponible sur l'écran.
+
+Keyboard Switcher est <b>opensource</b> et <b>sans publicité</b>. 
+
+Vous pouvez faire un <a href="https://www.kunzisoft.com/donation">don</a> pour remercier le travail du développeur.
+
+Vous avez un bug : <a href="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues">https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues</a>

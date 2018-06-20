@@ -1,0 +1,5 @@
+ * Affichage d'un bouton flottant de sélection de clavier
+ * Affichage des claviers disponibles
+ * Paramètre pour le lancement de l'application au démarrage
+ * Paramètre de position du bouton flottant
+ * Paramètre de sélection de couleur du bouton flottant avec transparence

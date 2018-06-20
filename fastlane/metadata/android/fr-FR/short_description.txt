@@ -1,0 +1,1 @@
+Keyboard Switcher, bouton flottant pour changer facilement de clavier
