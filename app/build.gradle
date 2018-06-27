@@ -25,5 +25,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:preference-v7:$supportVersion"
     implementation "com.android.support:preference-v14:$supportVersion"
-    implementation 'com.github.Kunzisoft:AndroidClearChroma:1.9'
+    implementation 'com.github.Kunzisoft:AndroidClearChroma:2.0'
 }

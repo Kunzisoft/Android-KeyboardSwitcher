@@ -14,6 +14,12 @@
     <string name="settings_ime_available_key">settings_ime_available_key</string>
     <string name="settings_ime_available_title">Available keyboards</string>
 
+    <string name="settings_floating_button_key">settings_floating_button_key</string>
+    <string name="settings_floating_button_title">Enable floating button</string>
+
+    <string name="floating_button_warning">This feature may be unstable in some versions of Android (Lollipop and following).</string>
+    <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
+
     <string name="settings_position_button_key">settings_position_button_key</string>
     <string name="settings_position_button_title">Button position</string>
     <string name="settings_position_button_description">Button position at right</string>

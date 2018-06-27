@@ -16,14 +16,20 @@
 	<PreferenceCategory
 		android:title="@string/floating_button">
 		<SwitchPreference
+			android:key="@string/settings_floating_button_key"
+			android:title="@string/settings_floating_button_title"
+			android:defaultValue="false"/>
+		<SwitchPreference
 			android:key="@string/settings_position_button_key"
 			android:title="@string/settings_position_button_title"
+            android:dependency="@string/settings_floating_button_key"
             android:defaultValue="true"/>
         <com.kunzisoft.androidclearchroma.ChromaPreferenceCompat
             xmlns:chroma="http://schemas.android.com/apk/res-auto"
             android:key="@string/settings_colors_key"
             android:title="@string/settings_colors_title"
             android:summary="@string/settings_colors_description"
+            android:dependency="@string/settings_floating_button_key"
             chroma:chromaShapePreview="CIRCLE"
             chroma:chromaColorMode="ARGB"
             chroma:chromaIndicatorMode="HEX"

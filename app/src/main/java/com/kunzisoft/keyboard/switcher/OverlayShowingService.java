@@ -50,65 +50,69 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         super.onCreate();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        // check Button Position
-        boolean isAtRight = preferences.getBoolean(getString(R.string.settings_position_button_key), true);
 
-        wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
 
-        overlayedButton = new ImageView(this);
-        @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
-        if (isAtRight) {
-            overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_right_36dp));
-        } else {
-            overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_left_36dp));
+            // check Button Position
+            boolean isAtRight = preferences.getBoolean(getString(R.string.settings_position_button_key), true);
+
+            wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+
+            overlayedButton = new ImageView(this);
+            @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
+            if (isAtRight) {
+                overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_right_36dp));
+            } else {
+                overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_left_36dp));
+            }
+            overlayedButton.setColorFilter(color);
+            overlayedButton.setAlpha((color >> 24) & 0xff);
+            overlayedButton.setOnTouchListener(this);
+            overlayedButton.setOnClickListener(this);
+
+            int typeFilter = LayoutParams.TYPE_SYSTEM_ALERT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                typeFilter = LayoutParams.TYPE_APPLICATION_OVERLAY;
+            }
+
+            LayoutParams params =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            if (isAtRight)
+                params.gravity = Gravity.END;
+            else
+                params.gravity = Gravity.START;
+
+            params.x = 0;
+            params.y = 0;
+            if (preferences.contains(Y_POSITION_PREFERENCE_KEY)) {
+                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, 0);
+                params.y = yPositionToSave;
+            }
+            wm.addView(overlayedButton, params);
+
+            topLeftView = new View(this);
+            LayoutParams topLeftParams =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            if (isAtRight)
+                topLeftParams.gravity = Gravity.END;
+            else
+                topLeftParams.gravity = Gravity.START;
+            topLeftParams.x = 0;
+            topLeftParams.y = 0;
+            topLeftParams.width = 0;
+            topLeftParams.height = 0;
+            wm.addView(topLeftView, topLeftParams);
         }
-        overlayedButton.setColorFilter(color);
-        overlayedButton.setAlpha((color >> 24) & 0xff);
-        overlayedButton.setOnTouchListener(this);
-        overlayedButton.setOnClickListener(this);
-
-        int typeFilter = LayoutParams.TYPE_SYSTEM_ALERT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            typeFilter = LayoutParams.TYPE_APPLICATION_OVERLAY;
-        }
-
-        LayoutParams params =
-                new LayoutParams(LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT,
-                        typeFilter,
-                        LayoutParams.FLAG_NOT_FOCUSABLE
-                                | LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                        PixelFormat.TRANSLUCENT);
-        if (isAtRight)
-            params.gravity = Gravity.END;
-        else
-            params.gravity = Gravity.START;
-
-        params.x = 0;
-        params.y = 0;
-        if (preferences.contains(Y_POSITION_PREFERENCE_KEY)) {
-            yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, 0);
-            params.y = yPositionToSave;
-        }
-        wm.addView(overlayedButton, params);
-
-        topLeftView = new View(this);
-        LayoutParams topLeftParams =
-                new LayoutParams(LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT,
-                        typeFilter,
-                        LayoutParams.FLAG_NOT_FOCUSABLE
-                                | LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                        PixelFormat.TRANSLUCENT);
-        if (isAtRight)
-            topLeftParams.gravity = Gravity.END;
-        else
-            topLeftParams.gravity = Gravity.START;
-        topLeftParams.x = 0;
-        topLeftParams.y = 0;
-        topLeftParams.width = 0;
-        topLeftParams.height = 0;
-        wm.addView(topLeftView, topLeftParams);
     }
 
     private void getPositionOnScreen() {
