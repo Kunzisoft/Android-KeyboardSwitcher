@@ -11,9 +11,8 @@ import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 
 import com.kunzisoft.androidclearchroma.ChromaPreferenceFragmentCompat;
-import com.kunzisoft.keyboard.switcher.dialog.WarningFloatingButtonDialog;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
+import com.kunzisoft.keyboard.switcher.utils.Utilities;
 
 public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         implements Preference.OnPreferenceClickListener,
@@ -38,6 +37,9 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         Preference preference = findPreference(getString(R.string.settings_ime_available_key));
         preference.setOnPreferenceClickListener(this);
 
+        preference = findPreference(getString(R.string.settings_ime_change_key));
+        preference.setOnPreferenceClickListener(this);
+
         preferenceFloatingButton = (SwitchPreference) findPreference(getString(R.string.settings_floating_button_key));
         preferenceFloatingButton.setOnPreferenceChangeListener(this);
 
@@ -49,9 +51,11 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
     public boolean onPreferenceClick(Preference preference) {
         // here you should use the same keys as you used in the xml-file
         if (preference.getKey().equals(getString(R.string.settings_ime_available_key))) {
-            Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            Utilities.openAvailableKeyboards(getContext());
+        }
+
+        if (preference.getKey().equals(getString(R.string.settings_ime_change_key))) {
+            Utilities.chooseAKeyboard(getContext());
         }
 
         return false;

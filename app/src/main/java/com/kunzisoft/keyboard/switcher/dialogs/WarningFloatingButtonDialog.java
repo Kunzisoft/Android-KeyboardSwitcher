@@ -1,4 +1,4 @@
-package com.kunzisoft.keyboard.switcher.dialog;
+package com.kunzisoft.keyboard.switcher.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,8 +22,8 @@ public class WarningFloatingButtonDialog extends DialogFragment {
     OnFloatingButtonListener onClickListener;
 
     public interface OnFloatingButtonListener {
-        void onPositiveButtonClick();
-        void onNegativeButtonClick();
+        void onFloatingButtonDialogPositiveButtonClick();
+        void onFloatingButtonDialogNegativeButtonClick();
     }
 
     @Override
@@ -53,14 +53,14 @@ public class WarningFloatingButtonDialog extends DialogFragment {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                onClickListener.onPositiveButtonClick();
+                onClickListener.onFloatingButtonDialogPositiveButtonClick();
             }
         });
         builder.setMessage(stringBuilder);
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                onClickListener.onNegativeButtonClick();
+                onClickListener.onFloatingButtonDialogNegativeButtonClick();
                 dismiss();
             }
         });

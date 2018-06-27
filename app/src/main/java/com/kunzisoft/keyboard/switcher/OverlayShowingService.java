@@ -21,6 +21,8 @@ import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
+import com.kunzisoft.keyboard.switcher.utils.Utilities;
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class OverlayShowingService extends Service implements OnTouchListener, OnClickListener {
@@ -180,10 +182,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
-            InputMethodManager imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            if (imeManager != null) {
-                imeManager.showInputMethodPicker();
-            }
+            Utilities.chooseAKeyboard(this);
         }
     }
 

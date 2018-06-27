@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.kunzisoft.keyboard.switcher.dialog.WarningFloatingButtonDialog;
+import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
 
 public class PreferenceActivity extends AppCompatActivity implements WarningFloatingButtonDialog.OnFloatingButtonListener{
 
@@ -52,7 +52,7 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
     }
 
     @Override
-    public void onPositiveButtonClick() {
+    public void onFloatingButtonDialogPositiveButtonClick() {
         if (preferenceFragment != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 preferenceFragment.checkDrawOverlayPermission();
@@ -63,7 +63,7 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
     }
 
     @Override
-    public void onNegativeButtonClick() {
+    public void onFloatingButtonDialogNegativeButtonClick() {
         preferenceFragment.stopFloatingButtonService();
     }
 }

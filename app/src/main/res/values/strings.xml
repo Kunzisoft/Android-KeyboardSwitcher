@@ -5,14 +5,19 @@
 
     <string name="general">General</string>
 
+    <string name="settings_ime_available_key">settings_ime_available_key</string>
+    <string name="settings_ime_available_title">Available keyboards</string>
+
+    <string name="settings_ime_change_key">settings_ime_choose_key</string>
+    <string name="settings_ime_change_title">Change the default keyboard</string>
+
+    <string name="startup">Startup</string>
+
     <string name="settings_launch_startup_key">settings_launch_startup</string>
     <string name="settings_launch_startup_title">Launch at startup</string>
     <string name="settings_launch_startup_description">Launch the app at startup</string>
 
     <string name="floating_button">Floating keyboard button</string>
-
-    <string name="settings_ime_available_key">settings_ime_available_key</string>
-    <string name="settings_ime_available_title">Available keyboards</string>
 
     <string name="settings_floating_button_key">settings_floating_button_key</string>
     <string name="settings_floating_button_title">Enable floating button</string>

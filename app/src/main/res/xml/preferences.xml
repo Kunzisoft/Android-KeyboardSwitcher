@@ -7,11 +7,18 @@
             android:key="@string/settings_ime_available_key"
             android:title="@string/settings_ime_available_title"
             android:persistent="false" />
+		<Preference
+			android:key="@string/settings_ime_change_key"
+			android:title="@string/settings_ime_change_title"
+			android:persistent="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/startup">
 		<SwitchPreference
 			android:key="@string/settings_launch_startup_key"
 			android:title="@string/settings_launch_startup_title"
 			android:description="@string/settings_launch_startup_description"
-			android:defaultValue="true"/>
+			android:defaultValue="false"/>
 	</PreferenceCategory>
 	<PreferenceCategory
 		android:title="@string/floating_button">
