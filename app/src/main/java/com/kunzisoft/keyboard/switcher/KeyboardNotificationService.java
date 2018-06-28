@@ -3,7 +3,6 @@ package com.kunzisoft.keyboard.switcher;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +12,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
+
+import com.kunzisoft.keyboard.switcher.utils.Utilities;
 
 import static android.content.ContentValues.TAG;
 
@@ -66,14 +67,6 @@ public class KeyboardNotificationService extends Service {
         return START_NOT_STICKY;
     }
 
-    private PendingIntent getPendingIntent() {
-        Intent chooserIntent = new Intent(this, KeyboardManagerActivity.class);
-        chooserIntent.setAction(Intent.ACTION_MAIN);
-        chooserIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        return PendingIntent.getActivity(
-                this, 0, chooserIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
     private void newNotification() {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_KEYBOARD)
@@ -83,11 +76,12 @@ public class KeyboardNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             builder.setVisibility(Notification.VISIBILITY_SECRET);
         builder.setContentText(getString(R.string.notification_content_text));
-        builder.setContentIntent(getPendingIntent());
+        builder.setContentIntent(Utilities.getPendingIntent(this));
 
         notificationManager.cancel(notificationId);
         notificationManager.notify(notificationId, builder.build());
 
+        /*
         stopTask(cleanNotificationTimer);
         cleanNotificationTimer = new Thread(new Runnable() {
             @Override
@@ -102,6 +96,7 @@ public class KeyboardNotificationService extends Service {
             }
         });
         cleanNotificationTimer.start();
+        */
     }
 
     private void stopTask(Thread task) {
@@ -112,7 +107,6 @@ public class KeyboardNotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("DESTROY", "destroy service");
         notificationManager.cancel(notificationId);
     }
 }

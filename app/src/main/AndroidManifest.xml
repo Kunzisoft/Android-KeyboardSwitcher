@@ -37,6 +37,14 @@
         <service android:name=".OverlayShowingService" />
         <service android:name=".KeyboardNotificationService" />
 
+        <receiver android:name=".KeyboardWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/keyboard_widget_info" />
+        </receiver>
+
     </application>
 
 </manifest>
