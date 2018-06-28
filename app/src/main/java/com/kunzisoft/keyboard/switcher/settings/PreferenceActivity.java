@@ -1,4 +1,4 @@
-package com.kunzisoft.keyboard.switcher;
+package com.kunzisoft.keyboard.switcher.settings;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.kunzisoft.keyboard.switcher.R;
 import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
 
 public class PreferenceActivity extends AppCompatActivity implements WarningFloatingButtonDialog.OnFloatingButtonListener{

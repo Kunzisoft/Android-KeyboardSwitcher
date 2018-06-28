@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Transparent" >
 
         <activity
-            android:name=".PreferenceActivity"
+            android:name=".settings.PreferenceActivity"
             android:exported="true"
             android:theme="@style/Theme.Preference">
             <intent-filter>
@@ -23,9 +23,9 @@
         </activity>
         <activity android:name=".KeyboardManagerActivity"
             android:label=""/>
-        <activity android:name=".BootUpActivity"
+        <activity android:name=".boot.BootUpActivity"
             android:label="" />
-        <receiver android:enabled="true" android:name=".BootUpReceiver"
+        <receiver android:enabled="true" android:name=".boot.BootUpReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
 
             <intent-filter>
@@ -34,9 +34,8 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".OverlayShowingService">
-        </service>
+        <service android:name=".OverlayShowingService" />
+        <service android:name=".KeyboardNotificationService" />
 
     </application>
 

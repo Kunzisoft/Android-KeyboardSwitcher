@@ -3,32 +3,38 @@ package com.kunzisoft.keyboard.switcher;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 /**
- * Activity to show manager on Marshmallow
+ * Activity to show keyboard manager
  */
 public class KeyboardManagerActivity extends AppCompatActivity {
 
     private View rootView;
-    private AppCompatDialog dialogUtility;
+
+    enum DialogState {
+        PICKING, CHOSEN
+    }
+
+    private DialogState mState;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.empty);
         rootView = findViewById(R.id.root_view);
+    }
 
-        // Only to show input method picker
-        dialogUtility = new AppCompatDialog(this, android.R.style.Theme_Panel);
-        if (dialogUtility.getWindow() != null) {
-            dialogUtility.getWindow().setTitle("");
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(mState == DialogState.PICKING) {
+            mState = DialogState.CHOSEN;
         }
-        dialogUtility.setCanceledOnTouchOutside(true);
-        dialogUtility.setCancelable(true);
-        dialogUtility.show();
+        else if(mState == DialogState.CHOSEN) {
+            finish();
+        }
     }
 
     @Override
@@ -42,21 +48,9 @@ public class KeyboardManagerActivity extends AppCompatActivity {
                 if (imeManager != null) {
                     imeManager.showInputMethodPicker();
                 }
-                rootView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 100);
+                mState = DialogState.PICKING;
             }
         }, 100);
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (dialogUtility != null)
-            dialogUtility.dismiss();
-        super.onDestroy();
     }
 
     @Override

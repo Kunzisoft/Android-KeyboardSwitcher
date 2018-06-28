@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.kunzisoft.keyboard.switcher.utils.Utilities;

@@ -17,9 +17,16 @@
 		<SwitchPreference
 			android:key="@string/settings_launch_startup_key"
 			android:title="@string/settings_launch_startup_title"
-			android:description="@string/settings_launch_startup_description"
 			android:defaultValue="false"/>
 	</PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/notification">
+        <SwitchPreference
+            android:key="@string/settings_notification_key"
+            android:title="@string/settings_notification_title"
+            android:description="@string/settings_notification_description"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
 	<PreferenceCategory
 		android:title="@string/floating_button">
 		<SwitchPreference

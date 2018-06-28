@@ -1,10 +1,12 @@
-package com.kunzisoft.keyboard.switcher;
+package com.kunzisoft.keyboard.switcher.boot;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.kunzisoft.keyboard.switcher.R;
 
 /**
  * Broadcast receiver for "action boot completed"

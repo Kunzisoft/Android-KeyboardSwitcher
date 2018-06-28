@@ -1,4 +1,4 @@
-package com.kunzisoft.keyboard.switcher;
+package com.kunzisoft.keyboard.switcher.boot;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,9 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+
+import com.kunzisoft.keyboard.switcher.OverlayShowingService;
+import com.kunzisoft.keyboard.switcher.R;
 
 /**
  * Utility class to show keyboard button at startup
