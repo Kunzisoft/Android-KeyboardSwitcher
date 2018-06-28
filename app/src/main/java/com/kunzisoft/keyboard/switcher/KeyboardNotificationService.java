@@ -1,6 +1,5 @@
 package com.kunzisoft.keyboard.switcher;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -72,11 +71,13 @@ public class KeyboardNotificationService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_KEYBOARD)
                 .setSmallIcon(R.drawable.ic_notification_white_24dp)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                .setContentTitle(getString(R.string.notification_title));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            builder.setVisibility(Notification.VISIBILITY_SECRET);
-        builder.setContentText(getString(R.string.notification_content_text));
-        builder.setContentIntent(Utilities.getPendingIntent(this));
+                .setContentTitle(getString(R.string.notification_title))
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                .setContentText(getString(R.string.notification_content_text))
+                .setContentIntent(Utilities.getPendingIntent(this));
 
         notificationManager.cancel(notificationId);
         notificationManager.notify(notificationId, builder.build());

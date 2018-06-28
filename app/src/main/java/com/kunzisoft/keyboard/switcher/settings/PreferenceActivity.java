@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kunzisoft.keyboard.switcher.R;
+import com.kunzisoft.keyboard.switcher.boot.BootUpActivity;
 import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
 
 public class PreferenceActivity extends AppCompatActivity implements WarningFloatingButtonDialog.OnFloatingButtonListener{
@@ -24,6 +25,9 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         setContentView(R.layout.preference_activity);
 
         preferenceFragment = new PreferenceFragment();
+
+        Intent bootUpIntent = new Intent(this, BootUpActivity.class);
+        startActivity(bootUpIntent);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, preferenceFragment)

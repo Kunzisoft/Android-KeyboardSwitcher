@@ -1,4 +1,4 @@
-<b>Keyboard Switcher is a keyboard selection application</b>, it allows to <b>switch easily</b> from the current keyboard to another in several ways, thanks to a discreet floating button still available on the screen, a shortcut, or a notification.
+<b>Keyboard Switcher is a keyboard selection application</b>, it allows to <b>switch easily</b> from the current keyboard to another in several ways, thanks to a discreet floating button available on the screen, a shortcut, or a notification.
 
 Keyboard Switcher is <b>opensource</b> and <b>ad-free</b>. 
 
