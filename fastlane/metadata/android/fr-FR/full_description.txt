@@ -1,4 +1,4 @@
-<b>Keyboard Switcher est une application de sélection de clavier</b>, elle permet de <b>switcher facilement</b> du clavier courant à un autre grace à un bouton flottant discret toujours disponible sur l'écran.
+<b>Keyboard Switcher est une application de sélection de clavier</b>, elle permet de <b>switcher facilement</b> du clavier courant à un autre de plusieurs façons, grâce à un bouton flottant discret toujours disponible sur l'écran, un raccourci ou une notification.
 
 Keyboard Switcher est <b>opensource</b> et <b>sans publicité</b>. 
 
