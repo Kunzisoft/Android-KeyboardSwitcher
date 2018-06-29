@@ -91,6 +91,8 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
                     WarningFloatingButtonDialog dialogFragment = new WarningFloatingButtonDialog();
                     if (getFragmentManager() != null)
                         dialogFragment.show(getFragmentManager(), "pro_feature_dialog");
+                } else {
+                    startFloatingButtonService();
                 }
             } else {
                 stopFloatingButtonService();

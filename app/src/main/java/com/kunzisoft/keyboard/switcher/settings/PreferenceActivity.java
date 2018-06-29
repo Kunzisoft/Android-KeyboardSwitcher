@@ -1,16 +1,19 @@
 package com.kunzisoft.keyboard.switcher.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kunzisoft.keyboard.switcher.R;
 import com.kunzisoft.keyboard.switcher.boot.BootUpActivity;
+import com.kunzisoft.keyboard.switcher.dialogs.AppDialog;
 import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
 
 public class PreferenceActivity extends AppCompatActivity implements WarningFloatingButtonDialog.OnFloatingButtonListener{
@@ -32,6 +35,13 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, preferenceFragment)
                 .commit();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean(getString(R.string.app_warning_key), true)) {
+            AppDialog dialogFragment = new AppDialog();
+            if (getFragmentManager() != null)
+                dialogFragment.show(getSupportFragmentManager(), "application_dialog");
+        }
     }
 
     @Override
