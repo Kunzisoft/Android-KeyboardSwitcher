@@ -34,7 +34,7 @@ platform :android do
       skip_upload_metadata: "false",
       skip_upload_images: "false",
       skip_upload_screenshots: "false",
-      apk: "./app/build/outputs/apk/free/release/app-release.apk",
+      apk: "./app/build/outputs/apk/release/app-release.apk",
       validate_only: "true",
     )
   end

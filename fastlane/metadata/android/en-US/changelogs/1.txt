@@ -1,4 +1,5 @@
- * New keyboard selection methods
- * Shortcut widget to choose the keyboard
- * Notifications to choose the keyboard
- * Parameter button to open the keyboard
+ * Display a floating keyboard selection button
+ * Display of available keyboards
+ * Setting for launching the application at startup
+ * Setting for the position of the floating button
+ * Setting for the color of the floating button with transparency

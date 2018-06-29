@@ -1,0 +1,4 @@
+ * New keyboard selection methods
+ * Shortcut widget to choose the keyboard
+ * Notifications to choose the keyboard
+ * Parameter button to open the keyboard

@@ -1,0 +1,4 @@
+ * Nouvelles méthodes de sélection de clavier
+ * Raccourci widget pour choisir le clavier
+ * Notifications pour choisir le clavier
+ * Bouton paramètre pour ouvrir le clavier
