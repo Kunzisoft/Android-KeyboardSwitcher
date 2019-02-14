@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,8 +13,13 @@ import com.kunzisoft.keyboard.switcher.boot.BootUpActivity;
 import com.kunzisoft.keyboard.switcher.dialogs.AppDialog;
 import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 public class PreferenceActivity extends AppCompatActivity implements WarningFloatingButtonDialog.OnFloatingButtonListener{
 
+    private static final String TAG_PREFERENCE_FRAGMENT = "TAG_PREFERENCE_FRAGMENT";
     private PreferenceFragment preferenceFragment;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -26,14 +28,19 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.preference_activity);
+        // Manage fragment who contains list of preferences
+        preferenceFragment =
+                (PreferenceFragment) getSupportFragmentManager().findFragmentByTag(TAG_PREFERENCE_FRAGMENT);
 
-        preferenceFragment = new PreferenceFragment();
+        if(preferenceFragment == null)
+            preferenceFragment = new PreferenceFragment();
 
         Intent bootUpIntent = new Intent(this, BootUpActivity.class);
         startActivity(bootUpIntent);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, preferenceFragment)
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, preferenceFragment, TAG_PREFERENCE_FRAGMENT)
                 .commit();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
