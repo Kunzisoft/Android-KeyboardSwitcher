@@ -39,9 +39,11 @@ In these cases, the application may be superfluous.</string>
     <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).</string>
     <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
 
-    <string name="settings_position_button_key" translatable="false">settings_position_button_key</string>
-    <string name="settings_position_button_title">Button position</string>
-    <string name="settings_position_button_description">Button position at right</string>
+    <string name="settings_floating_button_position_key" translatable="false">settings_floating_button_position_key</string>
+    <string name="settings_floating_button_position_title">Button position</string>
+
+    <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
+    <string name="settings_floating_button_lock_title">Lock button</string>
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
     <string name="settings_colors_title">Button colors</string>

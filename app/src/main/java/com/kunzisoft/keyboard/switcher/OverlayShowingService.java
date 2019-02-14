@@ -40,6 +40,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private boolean moving;
     private WindowManager wm;
 
+    private boolean lockedButton;
+
     @Override
     public IBinder onBind(Intent intent) {
 	return null;
@@ -55,7 +57,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
 
             // check Button Position
-            boolean isAtRight = preferences.getBoolean(getString(R.string.settings_position_button_key), true);
+            boolean isAtRight = preferences.getBoolean(getString(R.string.settings_floating_button_position_key), true);
+            lockedButton = preferences.getBoolean(getString(R.string.settings_floating_button_lock_key), false);
 
             wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
@@ -134,9 +137,11 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            float y = event.getRawY();
+        float y = 0;
+        if (!lockedButton)
+            y = event.getRawY();
 
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             moving = false;
 
             getPositionOnScreen();
@@ -147,8 +152,6 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             int[] topLeftLocationOnScreen = new int[2];
             topLeftView.getLocationOnScreen(topLeftLocationOnScreen);
-
-            float y = event.getRawY();
 
             WindowManager.LayoutParams params = (LayoutParams) overlayedButton.getLayoutParams();
 

@@ -24,7 +24,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
     /* https://stackoverflow.com/questions/7569937/unable-to-add-window-android-view-viewrootw44da9bc0-permission-denied-for-t
     code to post/handler request for permission
     */
-    public final static int REQUEST_CODE = 6517;
+    private final static int REQUEST_CODE = 6517;
 
     private Intent notificationService;
     private Intent floatingButtonService;
@@ -40,11 +40,10 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         notificationService = new Intent(getActivity(), KeyboardNotificationService.class);
 
         // add listeners for non-default actions
-        Preference preference = findPreference(getString(R.string.settings_ime_available_key));
-        preference.setOnPreferenceClickListener(this);
-
-        preference = findPreference(getString(R.string.settings_ime_change_key));
-        preference.setOnPreferenceClickListener(this);
+        findPreference(getString(R.string.settings_ime_available_key))
+                .setOnPreferenceClickListener(this);
+        findPreference(getString(R.string.settings_ime_change_key))
+                .setOnPreferenceClickListener(this);
 
         preferenceNotification = (SwitchPreference) findPreference(getString(R.string.settings_notification_key));
         preferenceNotification.setOnPreferenceChangeListener(this);
@@ -52,8 +51,10 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         preferenceFloatingButton = (SwitchPreference) findPreference(getString(R.string.settings_floating_button_key));
         preferenceFloatingButton.setOnPreferenceChangeListener(this);
 
-        preference = findPreference(getString(R.string.settings_position_button_key));
-        preference.setOnPreferenceChangeListener(this);
+        findPreference(getString(R.string.settings_floating_button_position_key))
+                .setOnPreferenceChangeListener(this);
+        findPreference(getString(R.string.settings_floating_button_lock_key))
+                .setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -111,11 +112,18 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             }
         }
 
-        if (preference.getKey().equals(getString(R.string.settings_position_button_key))) {
+        if (preference.getKey().equals(getString(R.string.settings_floating_button_position_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;
             switchPreference.setChecked((Boolean) newValue);
             restartFloatingButtonService();
         }
+
+        if (preference.getKey().equals(getString(R.string.settings_floating_button_lock_key))) {
+            SwitchPreference switchPreference = (SwitchPreference) preference;
+            switchPreference.setChecked((Boolean) newValue);
+            restartFloatingButtonService();
+        }
+
         return false;
     }
 
