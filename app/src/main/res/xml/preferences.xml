@@ -33,16 +33,16 @@
 			android:key="@string/settings_floating_button_key"
 			android:title="@string/settings_floating_button_title"
 			android:defaultValue="false"/>
-        <SwitchPreference
-            android:key="@string/settings_floating_button_lock_key"
-            android:title="@string/settings_floating_button_lock_title"
-            android:dependency="@string/settings_floating_button_key"
-            android:defaultValue="false"/>
 		<SwitchPreference
 			android:key="@string/settings_floating_button_position_key"
 			android:title="@string/settings_floating_button_position_title"
             android:dependency="@string/settings_floating_button_key"
             android:defaultValue="true"/>
+		<SwitchPreference
+			android:key="@string/settings_floating_button_lock_key"
+			android:title="@string/settings_floating_button_lock_title"
+			android:dependency="@string/settings_floating_button_key"
+			android:defaultValue="false"/>
         <com.kunzisoft.androidclearchroma.ChromaPreferenceCompat
             xmlns:chroma="http://schemas.android.com/apk/res-auto"
             android:key="@string/settings_colors_key"

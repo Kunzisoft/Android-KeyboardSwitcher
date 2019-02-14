@@ -45,7 +45,7 @@
     <string name="settings_floating_button_position_title">Button position</string>
 
     <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
-    <string name="settings_floating_button_lock_title">Locked button</string>
+    <string name="settings_floating_button_lock_title">Locked position</string>
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
     <string name="settings_colors_title">Button color</string>
