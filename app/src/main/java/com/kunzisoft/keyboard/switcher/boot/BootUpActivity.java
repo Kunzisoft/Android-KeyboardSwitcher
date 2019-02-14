@@ -19,8 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class BootUpActivity extends AppCompatActivity{
 
     private void startFloatingButtonService() {
-        Intent floatingButtonService = new Intent(this, OverlayShowingService.class);
-        startService(floatingButtonService);
+        startService(new Intent(this, OverlayShowingService.class));
     }
 
     @Override
@@ -39,13 +38,11 @@ public class BootUpActivity extends AppCompatActivity{
 				if (Settings.canDrawOverlays(getApplicationContext())) {
 					startFloatingButtonService();
 				}
-				finish();
             } else {
                 startFloatingButtonService();
-                finish();
             }
-        } else {
-            finish();
         }
+
+        finish();
     }
 }

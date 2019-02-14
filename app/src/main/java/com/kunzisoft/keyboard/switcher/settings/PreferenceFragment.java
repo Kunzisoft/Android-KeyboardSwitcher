@@ -30,18 +30,25 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
     */
     private final static int REQUEST_CODE = 6517;
 
-    private Intent notificationService;
-    private Intent floatingButtonService;
-
     private SwitchPreference preferenceNotification;
     private SwitchPreference preferenceFloatingButton;
 
-    @Override
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		// To unchecked the preference floating button if not allowed by the system
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if (!Settings.canDrawOverlays(getActivity())) {
+				if (preferenceFloatingButton != null)
+					preferenceFloatingButton.setChecked(false);
+			}
+		}
+	}
+
+	@Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-
-        floatingButtonService = new Intent(getActivity(), OverlayShowingService.class);
-        notificationService = new Intent(getActivity(), KeyboardNotificationService.class);
 
         // add listeners for non-default actions
         findPreference(getString(R.string.settings_ime_available_key))
@@ -81,28 +88,11 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
      */
     public void onPositiveButtonClick(@ColorInt int color) {
         super.onPositiveButtonClick(color);
-        restartFloatingButtonService();
+        restartFloatingButtonServiceAndCheckedButton();
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference.getKey().equals(getString(R.string.settings_floating_button_key))) {
-            SwitchPreference switchPreference = (SwitchPreference) preference;
-            boolean floatingButtonEnabled = (Boolean) newValue;
-            switchPreference.setChecked(floatingButtonEnabled);
-
-            if (floatingButtonEnabled) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    WarningFloatingButtonDialog dialogFragment = new WarningFloatingButtonDialog();
-                    if (getFragmentManager() != null)
-                        dialogFragment.show(getFragmentManager(), "pro_feature_dialog");
-                } else {
-                    startFloatingButtonService();
-                }
-            } else {
-                stopFloatingButtonService();
-            }
-        }
 
         if (preference.getKey().equals(getString(R.string.settings_notification_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;
@@ -116,44 +106,64 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             }
         }
 
+		if (preference.getKey().equals(getString(R.string.settings_floating_button_key))) {
+			SwitchPreference switchPreference = (SwitchPreference) preference;
+			boolean floatingButtonEnabled = (Boolean) newValue;
+			switchPreference.setChecked(floatingButtonEnabled);
+
+			if (floatingButtonEnabled) {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					WarningFloatingButtonDialog dialogFragment = new WarningFloatingButtonDialog();
+					if (getFragmentManager() != null)
+						dialogFragment.show(getFragmentManager(), "warning_floating_button_dialog");
+				} else {
+					startFloatingButtonServiceAndCheckButton();
+				}
+			} else {
+				stopFloatingButtonServiceAndUncheckedButton();
+			}
+		}
+
         if (preference.getKey().equals(getString(R.string.settings_floating_button_position_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;
             switchPreference.setChecked((Boolean) newValue);
-            restartFloatingButtonService();
+            restartFloatingButtonServiceAndCheckedButton();
         }
 
         if (preference.getKey().equals(getString(R.string.settings_floating_button_lock_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;
             switchPreference.setChecked((Boolean) newValue);
-            restartFloatingButtonService();
+            restartFloatingButtonServiceAndCheckedButton();
         }
 
         return false;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void checkDrawOverlayPermission() {
-        /* check if we already  have permission to draw over other apps */
-        if (getActivity() != null
-                && !Settings.canDrawOverlays(getActivity())) {
-            try {
-                /* if not construct intent to request permission */
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getActivity().getPackageName()));
-                /* request permission via start activity for result */
-                startActivityForResult(intent, REQUEST_CODE);
-            } catch (ActivityNotFoundException e) {
-                if (getContext() != null)
-                    new AlertDialog.Builder(getContext())
-                            .setMessage(R.string.error_overlay_permission_request)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {}
-                            }).create().show();
-            }
-        } else {
-            startFloatingButtonService();
-        }
+    private boolean drawOverlayPermissionAllowed() {
+    	if (getActivity() != null) {
+			/* check if we already  have permission to draw over other apps */
+			if (Settings.canDrawOverlays(getActivity())) {
+				return true;
+			} else {
+				try {
+					/* if not construct intent to request permission */
+					Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+							Uri.parse("package:" + getActivity().getPackageName()));
+					/* request permission via start activity for result */
+					startActivityForResult(intent, REQUEST_CODE);
+				} catch (ActivityNotFoundException e) {
+					if (getContext() != null)
+						new AlertDialog.Builder(getContext())
+								.setMessage(R.string.error_overlay_permission_request)
+								.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialogInterface, int i) {}
+								}).create().show();
+				}
+			}
+		}
+        return false;
     }
 
     @Override
@@ -164,9 +174,8 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         if (requestCode == REQUEST_CODE) {
             /* if so check once again if we have permission */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (Settings.canDrawOverlays(getActivity())
-                        && floatingButtonService != null) {
-                    startFloatingButtonService();
+                if (Settings.canDrawOverlays(getActivity())) {
+                    startFloatingButtonServiceAndCheckButton();
                 }
             }
         }
@@ -174,7 +183,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 
     public void startNotificationService() {
         if (getActivity() != null) {
-            getActivity().startService(notificationService);
+            getActivity().startService(new Intent(getActivity(), KeyboardNotificationService.class));
         }
         if (preferenceNotification != null)
             preferenceNotification.setChecked(true);
@@ -182,35 +191,42 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 
     public void stopNotificationService() {
         if (getActivity() != null) {
-            getActivity().stopService(notificationService);
+            getActivity().stopService(new Intent(getActivity(), KeyboardNotificationService.class));
         }
         if (preferenceNotification != null)
             preferenceNotification.setChecked(false);
     }
 
-    public void startFloatingButtonService() {
+    public void startFloatingButtonServiceAndCheckButton() {
         if (getActivity() != null) {
-            getActivity().startService(floatingButtonService);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+				if (drawOverlayPermissionAllowed()) {
+					getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
+				} else {
+					if (preferenceFloatingButton != null)
+						preferenceFloatingButton.setChecked(false);
+				}
+			} else {
+				getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
+			}
         }
         if (preferenceFloatingButton != null)
             preferenceFloatingButton.setChecked(true);
     }
 
-    public void stopFloatingButtonService() {
+    public void stopFloatingButtonServiceAndUncheckedButton() {
         if (getActivity() != null) {
-            getActivity().stopService(floatingButtonService);
+            getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
         }
         if (preferenceFloatingButton != null)
             preferenceFloatingButton.setChecked(false);
     }
 
-    public void restartFloatingButtonService() {
+    public void restartFloatingButtonServiceAndCheckedButton() {
         // Restart service
         if (getActivity() != null) {
             getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
-            getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
         }
-        if (preferenceFloatingButton != null)
-            preferenceFloatingButton.setChecked(true);
+		startFloatingButtonServiceAndCheckButton();
     }
 }
