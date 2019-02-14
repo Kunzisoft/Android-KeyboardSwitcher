@@ -5,10 +5,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.ColorInt;
-import android.support.annotation.RequiresApi;
-import android.support.v14.preference.SwitchPreference;
-import android.support.v7.preference.Preference;
+import androidx.annotation.ColorInt;
+import androidx.annotation.RequiresApi;
+import androidx.preference.SwitchPreference;
+import androidx.preference.Preference;
 
 import com.kunzisoft.androidclearchroma.ChromaPreferenceFragmentCompat;
 import com.kunzisoft.keyboard.switcher.KeyboardNotificationService;

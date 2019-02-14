@@ -6,8 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kunzisoft.keyboard.switcher.KeyboardNotificationService;
 import com.kunzisoft.keyboard.switcher.OverlayShowingService;

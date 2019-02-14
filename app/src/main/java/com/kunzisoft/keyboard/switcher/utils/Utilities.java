@@ -4,7 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.inputmethod.InputMethodManager;
 
 import com.kunzisoft.keyboard.switcher.KeyboardManagerActivity;
