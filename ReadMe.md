@@ -10,10 +10,10 @@ Yes, Keyboard Switcher is under **free license (GPL v3)** and **without advertis
 
 ## Contributions
 
-You can contribute in different ways to help us on our work.
+You can contribute in different ways to help me on my work.
 
 * Add features by a **[merge request](https://docs.gitlab.com/ee/gitlab-basics/add-merge-request.html)**.
-* **[Donate](https://www.kunzisoft.com/donation)**  ♥‿♥ to support us.
+* **[Donate](https://www.kunzisoft.com/donation)**  ♥‿♥ to support me.
 
 ## Download
 
@@ -29,7 +29,7 @@ You can contribute in different ways to help us on our work.
 
 ## License
 
- Copyright (c) 2018 Jeremy Jamet / [Kunzisoft](https://www.kunzisoft.com).
+ Copyright (c) 2019 Jeremy Jamet / [Kunzisoft](https://www.kunzisoft.com).
 
  This file is part of Keyboard Switcher.
 
