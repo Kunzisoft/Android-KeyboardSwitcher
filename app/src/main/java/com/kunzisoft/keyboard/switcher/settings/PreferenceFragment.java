@@ -100,9 +100,9 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             switchPreference.setChecked(notificationEnabled);
 
             if (notificationEnabled) {
-                startNotificationService();
+                startNotificationServiceAndCheckButton();
             } else {
-                stopNotificationService();
+                stopNotificationServiceAndUncheckButton();
             }
         }
 
@@ -181,15 +181,19 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         }
     }
 
-    public void startNotificationService() {
+    /*
+    ------ Notification Service ------
+     */
+
+	private void startNotificationServiceAndCheckButton() {
         if (getActivity() != null) {
-            getActivity().startService(new Intent(getActivity(), KeyboardNotificationService.class));
+        	getActivity().startService(new Intent(getActivity(), KeyboardNotificationService.class));
         }
         if (preferenceNotification != null)
             preferenceNotification.setChecked(true);
     }
 
-    public void stopNotificationService() {
+	private void stopNotificationServiceAndUncheckButton() {
         if (getActivity() != null) {
             getActivity().stopService(new Intent(getActivity(), KeyboardNotificationService.class));
         }
@@ -197,24 +201,32 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             preferenceNotification.setChecked(false);
     }
 
-    public void startFloatingButtonServiceAndCheckButton() {
-        if (getActivity() != null) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				if (drawOverlayPermissionAllowed()) {
-					getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
-				} else {
-					if (preferenceFloatingButton != null)
-						preferenceFloatingButton.setChecked(false);
-				}
+    /*
+    ------ Floating Button Service ------
+    */
+
+    private void startFloatingButtonService() {
+		if (getActivity() != null) {
+			getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
+		}
+	}
+
+    void startFloatingButtonServiceAndCheckButton() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if (drawOverlayPermissionAllowed()) {
+				startFloatingButtonService();
 			} else {
-				getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
+				if (preferenceFloatingButton != null)
+					preferenceFloatingButton.setChecked(false);
 			}
-        }
+		} else {
+			startFloatingButtonService();
+		}
         if (preferenceFloatingButton != null)
             preferenceFloatingButton.setChecked(true);
     }
 
-    public void stopFloatingButtonServiceAndUncheckedButton() {
+    void stopFloatingButtonServiceAndUncheckedButton() {
         if (getActivity() != null) {
             getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
         }
@@ -222,7 +234,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             preferenceFloatingButton.setChecked(false);
     }
 
-    public void restartFloatingButtonServiceAndCheckedButton() {
+    private void restartFloatingButtonServiceAndCheckedButton() {
         // Restart service
         if (getActivity() != null) {
             getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));

@@ -18,9 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class BootUpActivity extends AppCompatActivity{
 
+	private void startNotificationService() {
+		startService(new Intent(this, KeyboardNotificationService.class));
+	}
+
     private void startFloatingButtonService() {
-        startService(new Intent(this, OverlayShowingService.class));
-    }
+		startService(new Intent(this, OverlayShowingService.class));
+	}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,7 @@ public class BootUpActivity extends AppCompatActivity{
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (preferences.getBoolean(getString(R.string.settings_notification_key), false)) {
-            Intent notificationService = new Intent(this, KeyboardNotificationService.class);
-            startService(notificationService);
+			startNotificationService();
         }
 
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
