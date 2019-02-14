@@ -6,13 +6,14 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.app.AlertDialog;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 
 import com.kunzisoft.keyboard.switcher.R;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 /**
  * Custom Dialog that asks the user to download the pro version or make a donation.
@@ -45,7 +46,7 @@ public class WarningFloatingButtonDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-        stringBuilder.append(Html.fromHtml(getString(R.string.floating_button_warning)));
+        stringBuilder.append(getString(R.string.floating_button_warning));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && !Settings.canDrawOverlays(getActivity())) {
             stringBuilder.append("\n\n").append(Html.fromHtml(getString(R.string.floating_button_above_screen)));

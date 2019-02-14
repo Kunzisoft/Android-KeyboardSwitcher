@@ -2,9 +2,7 @@
     <string name="app_name">Keyboard Switcher</string>
 
     <string name="app_warning_key" translatable="false">app_warning_key</string>
-    <string name="app_warning"> This application makes it easy to switch keyboard if you do not have an effective way integrated into the operating system and the keyboard of your device.\n\n
-In Lollipop and later versions of Android, a long press on the space bar of your keyboard can make it easy to change. System-managed notifications also allow this change.\n\n
-In these cases, the application may be superfluous.</string>
+    <string name="app_warning"> This application makes it easy to switch keyboard if you do not have an effective way integrated into the operating system and the keyboard of your device.\n\nIn Lollipop and later versions of Android, a long press on the space bar of your keyboard can make it easy to change. System-managed notifications also allow this change.\n\nIn these cases, the application may be superfluous.</string>
 
     <string name="hint_text_test">test area</string>
 
@@ -36,18 +34,18 @@ In these cases, the application may be superfluous.</string>
     <string name="settings_floating_button_title">Enable floating button</string>
     <string name="settings_floating_button_description">Enable a floating button to choose a keyboard</string>
 
-    <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).</string>
+    <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).\n\nThe floating button may disappear if the system does not fully accept the \"Allow display over the app\" feature.</string>
     <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
 
     <string name="settings_floating_button_position_key" translatable="false">settings_floating_button_position_key</string>
     <string name="settings_floating_button_position_title">Button position</string>
 
     <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
-    <string name="settings_floating_button_lock_title">Lock button</string>
+    <string name="settings_floating_button_lock_title">Locked button</string>
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
-    <string name="settings_colors_title">Button colors</string>
-    <string name="settings_colors_description">Floating keyboard button with color [color]</string>
+    <string name="settings_colors_title">Button color</string>
+    <string name="settings_colors_description">[color]</string>
 
     <string name="donate">Donate</string>
 </resources>
