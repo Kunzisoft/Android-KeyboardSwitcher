@@ -9,8 +9,6 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import androidx.annotation.ColorRes;
-import androidx.core.content.ContextCompat;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +19,9 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 
 import com.kunzisoft.keyboard.switcher.utils.Utilities;
+
+import androidx.annotation.ColorRes;
+import androidx.core.content.ContextCompat;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -137,10 +138,14 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-        float y = 0;
-        if (!lockedButton)
-            y = event.getRawY();
+    	// Consume the touch and click if the button is locked
+        if (lockedButton) {
+			if (event.getAction() == MotionEvent.ACTION_UP)
+				onClick(v);
+			return true;
+		}
 
+		float y = event.getRawY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             moving = false;
 
