@@ -40,7 +40,7 @@ public class NotificationBuilder {
 				.setPriority(NotificationCompat.PRIORITY_LOW)
 				.setVisibility(NotificationCompat.VISIBILITY_SECRET)
 				.setContentText(context.getString(R.string.notification_content_text))
-				.setContentIntent(Utilities.getPendingIntent(context));
+				.setContentIntent(Utilities.getPendingIntent(context, 500L)); // Trick 500ms delay to show th dialog
 
 		mNotificationManager.cancel(notificationId);
 		mNotificationManager.notify(notificationId, builder.build());

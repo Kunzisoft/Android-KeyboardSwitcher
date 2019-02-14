@@ -1,29 +1,41 @@
 package com.kunzisoft.keyboard.switcher;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity to show keyboard manager
  */
 public class KeyboardManagerActivity extends AppCompatActivity {
 
+	public static final String DELAY_SHOW_KEY = "DELAY_SHOW_KEY";
+
+	private long delay = 200L;
+
+	private InputMethodManager imeManager;
     private View rootView;
 
     enum DialogState {
-        PICKING, CHOSEN
+        NONE, PICKING, CHOSEN
     }
 
     private DialogState mState;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+		mState = DialogState.NONE;
         setContentView(R.layout.empty);
         rootView = findViewById(R.id.root_view);
+		super.onCreate(savedInstanceState);
+		imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+		if (getIntent() != null) {
+			delay = getIntent().getLongExtra(DELAY_SHOW_KEY, delay);
+		}
     }
 
     @Override
@@ -44,13 +56,12 @@ public class KeyboardManagerActivity extends AppCompatActivity {
         rootView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 if (imeManager != null) {
                     imeManager.showInputMethodPicker();
                 }
                 mState = DialogState.PICKING;
             }
-        }, 100);
+        }, delay);
     }
 
     @Override

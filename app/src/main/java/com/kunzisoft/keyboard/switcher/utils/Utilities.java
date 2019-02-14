@@ -44,10 +44,16 @@ public class Utilities {
         }
     }
 
-    public static PendingIntent getPendingIntent(Context context) {
+	public static PendingIntent getPendingIntent(Context context) {
+		return getPendingIntent(context, null);
+	}
+
+    public static PendingIntent getPendingIntent(Context context, @Nullable Long delay) {
         Intent chooserIntent = new Intent(context, KeyboardManagerActivity.class);
         chooserIntent.setAction(Intent.ACTION_MAIN);
         chooserIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        if (delay != null)
+        	chooserIntent.putExtra(KeyboardManagerActivity.DELAY_SHOW_KEY, delay);
         return PendingIntent.getActivity(
                 context, 0, chooserIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
