@@ -1,5 +1,6 @@
 package com.kunzisoft.keyboard.switcher.settings;
 
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 
 import com.kunzisoft.androidclearchroma.ChromaPreferenceFragmentCompat;
-import com.kunzisoft.keyboard.switcher.KeyboardNotificationService;
+import com.kunzisoft.keyboard.switcher.NotificationBuilder;
 import com.kunzisoft.keyboard.switcher.OverlayShowingService;
 import com.kunzisoft.keyboard.switcher.R;
 import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
@@ -20,6 +21,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         implements Preference.OnPreferenceClickListener,
@@ -32,6 +35,8 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 
     private SwitchPreference preferenceNotification;
     private SwitchPreference preferenceFloatingButton;
+
+    private NotificationBuilder mNotificationBuilder;
 
 	@Override
 	public void onResume() {
@@ -58,6 +63,10 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 
         preferenceNotification = (SwitchPreference) findPreference(getString(R.string.settings_notification_key));
         preferenceNotification.setOnPreferenceChangeListener(this);
+        if (getContext() != null) {
+			mNotificationBuilder =
+					new NotificationBuilder((NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE));
+		}
 
         preferenceFloatingButton = (SwitchPreference) findPreference(getString(R.string.settings_floating_button_key));
         preferenceFloatingButton.setOnPreferenceChangeListener(this);
@@ -88,7 +97,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
      */
     public void onPositiveButtonClick(@ColorInt int color) {
         super.onPositiveButtonClick(color);
-        restartFloatingButtonServiceAndCheckedButton();
+        restartFloatingButtonAndCheckedButton();
     }
 
     @Override
@@ -100,9 +109,9 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             switchPreference.setChecked(notificationEnabled);
 
             if (notificationEnabled) {
-                startNotificationServiceAndCheckButton();
+                startNotificationAndCheckButton();
             } else {
-                stopNotificationServiceAndUncheckButton();
+                stopNotificationAndUncheckButton();
             }
         }
 
@@ -117,23 +126,23 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 					if (getFragmentManager() != null)
 						dialogFragment.show(getFragmentManager(), "warning_floating_button_dialog");
 				} else {
-					startFloatingButtonServiceAndCheckButton();
+					startFloatingButtonAndCheckButton();
 				}
 			} else {
-				stopFloatingButtonServiceAndUncheckedButton();
+				stopFloatingButtonAndUncheckedButton();
 			}
 		}
 
         if (preference.getKey().equals(getString(R.string.settings_floating_button_position_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;
             switchPreference.setChecked((Boolean) newValue);
-            restartFloatingButtonServiceAndCheckedButton();
+            restartFloatingButtonAndCheckedButton();
         }
 
         if (preference.getKey().equals(getString(R.string.settings_floating_button_lock_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;
             switchPreference.setChecked((Boolean) newValue);
-            restartFloatingButtonServiceAndCheckedButton();
+            restartFloatingButtonAndCheckedButton();
         }
 
         return false;
@@ -175,7 +184,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             /* if so check once again if we have permission */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(getActivity())) {
-                    startFloatingButtonServiceAndCheckButton();
+                    startFloatingButtonAndCheckButton();
                 }
             }
         }
@@ -185,18 +194,18 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
     ------ Notification Service ------
      */
 
-	private void startNotificationServiceAndCheckButton() {
-        if (getActivity() != null) {
-        	getActivity().startService(new Intent(getActivity(), KeyboardNotificationService.class));
-        }
+	private void startNotificationAndCheckButton() {
+		if(mNotificationBuilder != null) {
+			mNotificationBuilder.createKeyboardNotification(getContext());
+		}
         if (preferenceNotification != null)
             preferenceNotification.setChecked(true);
     }
 
-	private void stopNotificationServiceAndUncheckButton() {
-        if (getActivity() != null) {
-            getActivity().stopService(new Intent(getActivity(), KeyboardNotificationService.class));
-        }
+	private void stopNotificationAndUncheckButton() {
+		if(mNotificationBuilder != null) {
+			mNotificationBuilder.cancelKeyboardNotification();
+		}
         if (preferenceNotification != null)
             preferenceNotification.setChecked(false);
     }
@@ -211,7 +220,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 		}
 	}
 
-    void startFloatingButtonServiceAndCheckButton() {
+    void startFloatingButtonAndCheckButton() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (drawOverlayPermissionAllowed()) {
 				startFloatingButtonService();
@@ -226,7 +235,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             preferenceFloatingButton.setChecked(true);
     }
 
-    void stopFloatingButtonServiceAndUncheckedButton() {
+    void stopFloatingButtonAndUncheckedButton() {
         if (getActivity() != null) {
             getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
         }
@@ -234,11 +243,11 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             preferenceFloatingButton.setChecked(false);
     }
 
-    private void restartFloatingButtonServiceAndCheckedButton() {
+    private void restartFloatingButtonAndCheckedButton() {
         // Restart service
         if (getActivity() != null) {
             getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
         }
-		startFloatingButtonServiceAndCheckButton();
+		startFloatingButtonAndCheckButton();
     }
 }

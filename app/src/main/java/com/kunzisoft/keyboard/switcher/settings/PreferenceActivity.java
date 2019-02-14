@@ -76,12 +76,12 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
     @Override
     public void onFloatingButtonDialogPositiveButtonClick() {
         if (preferenceFragment != null)
-        	preferenceFragment.startFloatingButtonServiceAndCheckButton();
+        	preferenceFragment.startFloatingButtonAndCheckButton();
     }
 
     @Override
     public void onFloatingButtonDialogNegativeButtonClick() {
 		if (preferenceFragment != null)
-        	preferenceFragment.stopFloatingButtonServiceAndUncheckedButton();
+        	preferenceFragment.stopFloatingButtonAndUncheckedButton();
     }
 }
