@@ -1,14 +1,12 @@
 package com.kunzisoft.keyboard.switcher.settings;
 
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.ColorInt;
-import androidx.annotation.RequiresApi;
-import androidx.preference.SwitchPreference;
-import androidx.preference.Preference;
 
 import com.kunzisoft.androidclearchroma.ChromaPreferenceFragmentCompat;
 import com.kunzisoft.keyboard.switcher.KeyboardNotificationService;
@@ -16,6 +14,12 @@ import com.kunzisoft.keyboard.switcher.OverlayShowingService;
 import com.kunzisoft.keyboard.switcher.R;
 import com.kunzisoft.keyboard.switcher.dialogs.WarningFloatingButtonDialog;
 import com.kunzisoft.keyboard.switcher.utils.Utilities;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.Preference;
+import androidx.preference.SwitchPreference;
 
 public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         implements Preference.OnPreferenceClickListener,
@@ -132,11 +136,21 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         /* check if we already  have permission to draw over other apps */
         if (getActivity() != null
                 && !Settings.canDrawOverlays(getActivity())) {
-            /* if not construct intent to request permission */
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getActivity().getPackageName()));
-            /* request permission via start activity for result */
-            startActivityForResult(intent, REQUEST_CODE);
+            try {
+                /* if not construct intent to request permission */
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getActivity().getPackageName()));
+                /* request permission via start activity for result */
+                startActivityForResult(intent, REQUEST_CODE);
+            } catch (ActivityNotFoundException e) {
+                if (getContext() != null)
+                    new AlertDialog.Builder(getContext())
+                            .setMessage(R.string.error_overlay_permission_request)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {}
+                            }).create().show();
+            }
         } else {
             startFloatingButtonService();
         }

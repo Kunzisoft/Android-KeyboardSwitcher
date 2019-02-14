@@ -1,13 +1,18 @@
 package com.kunzisoft.keyboard.switcher.utils;
 
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
-import androidx.annotation.Nullable;
 import android.view.inputmethod.InputMethodManager;
 
 import com.kunzisoft.keyboard.switcher.KeyboardManagerActivity;
+import com.kunzisoft.keyboard.switcher.R;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -15,9 +20,18 @@ public class Utilities {
 
     public static void openAvailableKeyboards(@Nullable Context context) {
         if (context != null) {
-            Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            try {
+                Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                new AlertDialog.Builder(context)
+                        .setMessage(R.string.error_unavailable_keyboard_feature)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {}
+                        }).create().show();
+            }
         }
     }
 
