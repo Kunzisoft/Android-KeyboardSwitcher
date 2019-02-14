@@ -39,7 +39,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private int originalXPos;
     private int originalYPos;
     private boolean moving;
-    private WindowManager wm;
+    private WindowManager windowManager;
 
     private boolean lockedButton;
 
@@ -61,7 +61,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             boolean isAtRight = preferences.getBoolean(getString(R.string.settings_floating_button_position_key), true);
             lockedButton = preferences.getBoolean(getString(R.string.settings_floating_button_lock_key), false);
 
-            wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
             overlayedButton = new ImageView(this);
             @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
@@ -98,7 +98,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, 0);
                 params.y = yPositionToSave;
             }
-            wm.addView(overlayedButton, params);
+            windowManager.addView(overlayedButton, params);
 
             topLeftView = new View(this);
             LayoutParams topLeftParams =
@@ -116,7 +116,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             topLeftParams.y = 0;
             topLeftParams.width = 0;
             topLeftParams.height = 0;
-            wm.addView(topLeftView, topLeftParams);
+            windowManager.addView(topLeftView, topLeftParams);
         }
     }
 
@@ -172,7 +172,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             params.y = newY - (topLeftLocationOnScreen[1]);
             yPositionToSave = params.y;
 
-            wm.updateViewLayout(overlayedButton, params);
+            windowManager.updateViewLayout(overlayedButton, params);
             moving = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             saveYPreferencePosition();
@@ -200,8 +200,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
         if (overlayedButton != null) {
             saveYPreferencePosition();
-            wm.removeView(overlayedButton);
-            wm.removeView(topLeftView);
+            windowManager.removeView(overlayedButton);
+            windowManager.removeView(topLeftView);
             overlayedButton = null;
             topLeftView = null;
         }
