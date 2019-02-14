@@ -122,7 +122,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     private void getPositionOnScreen() {
         int[] location = new int[2];
-        overlayedButton.getLocationOnScreen(location);
+        if (overlayedButton != null)
+            overlayedButton.getLocationOnScreen(location);
 
         originalXPos = location[0];
         originalYPos = location[1];
