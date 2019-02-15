@@ -35,8 +35,7 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         if(preferenceFragment == null)
             preferenceFragment = new PreferenceFragment();
 
-        Intent bootUpIntent = new Intent(this, BootUpActivity.class);
-        startActivity(bootUpIntent);
+        startActivity(new Intent(this, BootUpActivity.class));
 
         getSupportFragmentManager()
                 .beginTransaction()

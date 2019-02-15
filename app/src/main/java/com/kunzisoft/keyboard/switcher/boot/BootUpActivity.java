@@ -19,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class BootUpActivity extends AppCompatActivity{
 
+	private void stopFloatingButtonService() {
+		stopService(new Intent(this, OverlayShowingService.class));
+	}
+
     private void startFloatingButtonService() {
 		startService(new Intent(this, OverlayShowingService.class));
 	}
@@ -35,6 +39,7 @@ public class BootUpActivity extends AppCompatActivity{
 			notificationBuilder.createKeyboardNotification(this);
         }
 
+		stopFloatingButtonService();
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				if (Settings.canDrawOverlays(getApplicationContext())) {

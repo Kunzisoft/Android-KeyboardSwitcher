@@ -21,9 +21,11 @@ import android.widget.ImageView;
 import com.kunzisoft.keyboard.switcher.utils.Utilities;
 
 import androidx.annotation.ColorRes;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.kunzisoft.keyboard.switcher.NotificationBuilder.CHANNEL_ID_KEYBOARD;
 
 public class OverlayShowingService extends Service implements OnTouchListener, OnClickListener {
 
@@ -52,6 +54,19 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // To keep the service on top
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_KEYBOARD)
+                    .setSmallIcon(R.drawable.ic_notification_button_white_24dp)
+                    .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                    .setContentTitle(getString(R.string.notification_floating_button_title))
+                    .setContentText(getString(R.string.notification_floating_button_content_text))
+                    .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setVisibility(NotificationCompat.VISIBILITY_SECRET);
+            startForeground(56, builder.build());
+        }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 

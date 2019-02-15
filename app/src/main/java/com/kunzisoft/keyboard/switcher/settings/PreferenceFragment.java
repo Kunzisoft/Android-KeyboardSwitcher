@@ -226,13 +226,25 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
     ------ Floating Button Service ------
     */
 
+	private void stopFloatingButtonService() {
+		if (getActivity() != null) {
+			getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
+		}
+	}
+
     private void startFloatingButtonService() {
 		if (getActivity() != null) {
-			getActivity().startService(new Intent(getActivity(), OverlayShowingService.class));
+			Intent floatingButtonService = new Intent(getActivity(), OverlayShowingService.class);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+				getActivity().startForegroundService(floatingButtonService);
+			} else {
+				getActivity().startService(floatingButtonService);
+			}
 		}
 	}
 
     void startFloatingButtonAndCheckButton() {
+		stopFloatingButtonService();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (drawOverlayPermissionAllowed()) {
 				startFloatingButtonService();
@@ -248,9 +260,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
     }
 
     void stopFloatingButtonAndUncheckedButton() {
-        if (getActivity() != null) {
-            getActivity().stopService(new Intent(getActivity(), OverlayShowingService.class));
-        }
+        stopFloatingButtonService();
         if (preferenceFloatingButton != null)
             preferenceFloatingButton.setChecked(false);
     }

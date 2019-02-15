@@ -12,8 +12,8 @@ import androidx.core.content.ContextCompat;
 
 public class NotificationBuilder {
 
-	private static final String CHANNEL_ID_KEYBOARD = "com.kunzisoft.keyboard.notification.channel";
-	private static final String CHANNEL_NAME_KEYBOARD = "Keyboard switcher notification";
+	public static final String CHANNEL_ID_KEYBOARD = "com.kunzisoft.keyboard.notification.channel";
+	public static final String CHANNEL_NAME_KEYBOARD = "Keyboard switcher notification";
 
 	private NotificationManager mNotificationManager;
 	private int notificationId = 45;
@@ -34,12 +34,12 @@ public class NotificationBuilder {
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID_KEYBOARD)
 				.setSmallIcon(R.drawable.ic_notification_white_24dp)
 				.setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-				.setContentTitle(context.getString(R.string.notification_title))
+				.setContentTitle(context.getString(R.string.notification_keyboard_title))
 				.setAutoCancel(false)
 				.setOngoing(true)
 				.setPriority(NotificationCompat.PRIORITY_LOW)
 				.setVisibility(NotificationCompat.VISIBILITY_SECRET)
-				.setContentText(context.getString(R.string.notification_content_text))
+				.setContentText(context.getString(R.string.notification_keyboard_content_text))
 				.setContentIntent(Utilities.getPendingIntent(context, 500L)); // Trick 500ms delay to show th dialog
 
 		mNotificationManager.cancel(notificationId);
