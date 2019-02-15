@@ -1,0 +1,4 @@
+ * Added lock position for floating button
+ * Fixed multiple tap
+ * Fixed floating button for new Android devices
+ * Fixed other small bugs

@@ -2,14 +2,15 @@
     <string name="app_name">Keyboard Switcher</string>
 
     <string name="app_warning_key" translatable="false">app_warning_key</string>
-    <string name="app_warning"> This application makes it easy to switch keyboard if you do not have an effective way integrated into the operating system and the keyboard of your device.\n\n
-In Lollipop and later versions of Android, a long press on the space bar of your keyboard can make it easy to change. System-managed notifications also allow this change.\n\n
-In these cases, the application may be superfluous.</string>
+    <string name="app_warning"> This application makes it easy to switch keyboard if you do not have an effective way integrated into the operating system and the keyboard of your device.\n\nIn Lollipop and later versions of Android, a long press on the space bar of your keyboard can make it easy to change. System-managed notifications also allow this change.\n\nIn these cases, the application may be superfluous.</string>
 
     <string name="hint_text_test">test area</string>
 
-    <string name="notification_title">Switch the keyboard</string>
-    <string name="notification_content_text">Tap to select the default keyboard.</string>
+    <string name="notification_keyboard_title">Switch the keyboard</string>
+    <string name="notification_keyboard_content_text">Tap to select the default keyboard.</string>
+
+    <string name="notification_floating_button_title">Keyboard button</string>
+    <string name="notification_floating_button_content_text">Keyboard floating button service activated.</string>
 
     <string name="general">General</string>
 
@@ -18,6 +19,8 @@ In these cases, the application may be superfluous.</string>
 
     <string name="settings_ime_change_key" translatable="false">settings_ime_choose_key</string>
     <string name="settings_ime_change_title">Change the default keyboard</string>
+
+    <string name="error_unavailable_keyboard_feature">Your system is not able to open the keyboard selection dialog.</string>
 
     <string name="startup">Startup</string>
 
@@ -36,16 +39,21 @@ In these cases, the application may be superfluous.</string>
     <string name="settings_floating_button_title">Enable floating button</string>
     <string name="settings_floating_button_description">Enable a floating button to choose a keyboard</string>
 
+    <string name="error_overlay_permission_request">Your system is not able to open the overlay permission request dialog.</string>
+
     <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).</string>
+    <string name="floating_button_notification_warning">The display of an additional notification is essential to keep the button visible in your version of Android (O and following).</string>
     <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
 
-    <string name="settings_position_button_key" translatable="false">settings_position_button_key</string>
-    <string name="settings_position_button_title">Button position</string>
-    <string name="settings_position_button_description">Button position at right</string>
+    <string name="settings_floating_button_position_key" translatable="false">settings_floating_button_position_key</string>
+    <string name="settings_floating_button_position_title">Button position</string>
+
+    <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
+    <string name="settings_floating_button_lock_title">Locked position</string>
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
-    <string name="settings_colors_title">Button colors</string>
-    <string name="settings_colors_description">Floating keyboard button with color [color]</string>
+    <string name="settings_colors_title">Button color</string>
+    <string name="settings_colors_description">[color]</string>
 
     <string name="donate">Donate</string>
 </resources>

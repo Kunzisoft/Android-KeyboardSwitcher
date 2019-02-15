@@ -22,7 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".KeyboardManagerActivity"
-            android:label=""/>
+            android:label="">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity android:name=".boot.BootUpActivity"
             android:label="" />
         <receiver android:enabled="true" android:name=".boot.BootUpReceiver"
@@ -35,7 +39,6 @@
         </receiver>
 
         <service android:name=".OverlayShowingService" />
-        <service android:name=".KeyboardNotificationService" />
 
         <receiver android:name=".KeyboardWidgetProvider" >
             <intent-filter>
