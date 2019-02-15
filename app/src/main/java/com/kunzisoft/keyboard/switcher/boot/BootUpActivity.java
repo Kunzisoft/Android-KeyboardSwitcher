@@ -1,24 +1,31 @@
 package com.kunzisoft.keyboard.switcher.boot;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.kunzisoft.keyboard.switcher.KeyboardNotificationService;
+import com.kunzisoft.keyboard.switcher.NotificationBuilder;
 import com.kunzisoft.keyboard.switcher.OverlayShowingService;
 import com.kunzisoft.keyboard.switcher.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Utility class to show keyboard button at startup
  */
 public class BootUpActivity extends AppCompatActivity{
 
-    private Intent floatingButtonService;
+	private void stopFloatingButtonService() {
+		stopService(new Intent(this, OverlayShowingService.class));
+	}
+
+    private void startFloatingButtonService() {
+		startService(new Intent(this, OverlayShowingService.class));
+	}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,29 +34,22 @@ public class BootUpActivity extends AppCompatActivity{
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (preferences.getBoolean(getString(R.string.settings_notification_key), false)) {
-            Intent notificationService = new Intent(this, KeyboardNotificationService.class);
-            startService(notificationService);
+			NotificationBuilder notificationBuilder =
+					new NotificationBuilder((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
+			notificationBuilder.createKeyboardNotification(this);
         }
 
+		stopFloatingButtonService();
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
-            floatingButtonService = new Intent(this, OverlayShowingService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                checkDrawOverlayPermission();
+				if (Settings.canDrawOverlays(getApplicationContext())) {
+					startFloatingButtonService();
+				}
             } else {
-                startService(floatingButtonService);
-                finish();
+                startFloatingButtonService();
             }
-        } else {
-            finish();
         }
-    }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void checkDrawOverlayPermission() {
-        /* Do nothing here if not permitted */
-        if (Settings.canDrawOverlays(getApplicationContext())) {
-            startService(floatingButtonService);
-        }
         finish();
     }
 }

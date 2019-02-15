@@ -1,6 +1,6 @@
 # Android Keyboard Switcher
 
-<img src="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/raw/master/art/icon.png"> Keyboard Switcher is a **keyboard selection application**, it allows to switch easily from the current keyboard to another thanks to a discreet floating button still available on the screen.
+<img src="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/raw/master/art/icon.png"> Keyboard Switcher is a **keyboard selection application**, it allows to switch easily from the current keyboard to another in several ways, thanks to a discreet floating button available on the screen, a shortcut, or a notification.
 
 <img src="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/raw/master/art/screen.jpg" width="220">
 

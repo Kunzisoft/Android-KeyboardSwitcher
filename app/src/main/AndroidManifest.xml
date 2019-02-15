@@ -39,7 +39,6 @@
         </receiver>
 
         <service android:name=".OverlayShowingService" />
-        <service android:name=".KeyboardNotificationService" />
 
         <receiver android:name=".KeyboardWidgetProvider" >
             <intent-filter>

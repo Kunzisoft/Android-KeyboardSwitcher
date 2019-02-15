@@ -21,9 +21,11 @@ import android.widget.ImageView;
 import com.kunzisoft.keyboard.switcher.utils.Utilities;
 
 import androidx.annotation.ColorRes;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.kunzisoft.keyboard.switcher.NotificationBuilder.CHANNEL_ID_KEYBOARD;
 
 public class OverlayShowingService extends Service implements OnTouchListener, OnClickListener {
 
@@ -39,7 +41,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private int originalXPos;
     private int originalYPos;
     private boolean moving;
-    private WindowManager wm;
+    private WindowManager windowManager;
 
     private boolean lockedButton;
 
@@ -53,6 +55,19 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     public void onCreate() {
         super.onCreate();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // To keep the service on top
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_KEYBOARD)
+                    .setSmallIcon(R.drawable.ic_notification_button_white_24dp)
+                    .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                    .setContentTitle(getString(R.string.notification_floating_button_title))
+                    .setContentText(getString(R.string.notification_floating_button_content_text))
+                    .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setVisibility(NotificationCompat.VISIBILITY_SECRET);
+            startForeground(56, builder.build());
+        }
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
@@ -61,7 +76,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             boolean isAtRight = preferences.getBoolean(getString(R.string.settings_floating_button_position_key), true);
             lockedButton = preferences.getBoolean(getString(R.string.settings_floating_button_lock_key), false);
 
-            wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
             overlayedButton = new ImageView(this);
             @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
@@ -98,7 +113,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, 0);
                 params.y = yPositionToSave;
             }
-            wm.addView(overlayedButton, params);
+            windowManager.addView(overlayedButton, params);
 
             topLeftView = new View(this);
             LayoutParams topLeftParams =
@@ -116,13 +131,14 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             topLeftParams.y = 0;
             topLeftParams.width = 0;
             topLeftParams.height = 0;
-            wm.addView(topLeftView, topLeftParams);
+            windowManager.addView(topLeftView, topLeftParams);
         }
     }
 
     private void getPositionOnScreen() {
         int[] location = new int[2];
-        overlayedButton.getLocationOnScreen(location);
+        if (overlayedButton != null)
+            overlayedButton.getLocationOnScreen(location);
 
         originalXPos = location[0];
         originalYPos = location[1];
@@ -136,12 +152,14 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(View view, MotionEvent event) {
 
     	// Consume the touch and click if the button is locked
         if (lockedButton) {
-			if (event.getAction() == MotionEvent.ACTION_UP)
-				onClick(v);
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+                view.playSoundEffect(android.view.SoundEffectConstants.CLICK);
+                onClick(view);
+            }
 			return true;
 		}
 
@@ -171,7 +189,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             params.y = newY - (topLeftLocationOnScreen[1]);
             yPositionToSave = params.y;
 
-            wm.updateViewLayout(overlayedButton, params);
+            windowManager.updateViewLayout(overlayedButton, params);
             moving = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             saveYPreferencePosition();
@@ -199,8 +217,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
         if (overlayedButton != null) {
             saveYPreferencePosition();
-            wm.removeView(overlayedButton);
-            wm.removeView(topLeftView);
+            windowManager.removeView(overlayedButton);
+            windowManager.removeView(topLeftView);
             overlayedButton = null;
             topLeftView = null;
         }

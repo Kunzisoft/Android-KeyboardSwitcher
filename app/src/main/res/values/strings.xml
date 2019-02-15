@@ -6,8 +6,11 @@
 
     <string name="hint_text_test">test area</string>
 
-    <string name="notification_title">Switch the keyboard</string>
-    <string name="notification_content_text">Tap to select the default keyboard.</string>
+    <string name="notification_keyboard_title">Switch the keyboard</string>
+    <string name="notification_keyboard_content_text">Tap to select the default keyboard.</string>
+
+    <string name="notification_floating_button_title">Keyboard button</string>
+    <string name="notification_floating_button_content_text">Keyboard floating button service activated.</string>
 
     <string name="general">General</string>
 
@@ -16,6 +19,8 @@
 
     <string name="settings_ime_change_key" translatable="false">settings_ime_choose_key</string>
     <string name="settings_ime_change_title">Change the default keyboard</string>
+
+    <string name="error_unavailable_keyboard_feature">Your system is not able to open the keyboard selection dialog.</string>
 
     <string name="startup">Startup</string>
 
@@ -34,14 +39,17 @@
     <string name="settings_floating_button_title">Enable floating button</string>
     <string name="settings_floating_button_description">Enable a floating button to choose a keyboard</string>
 
-    <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).\n\nThe floating button may disappear if the system does not fully accept the \"Allow display over the app\" feature.\nIf so, try updating the Android version of your device. </string>
+    <string name="error_overlay_permission_request">Your system is not able to open the overlay permission request dialog.</string>
+
+    <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).</string>
+    <string name="floating_button_notification_warning">The display of an additional notification is essential to keep the button visible in your version of Android (O and following).</string>
     <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
 
     <string name="settings_floating_button_position_key" translatable="false">settings_floating_button_position_key</string>
     <string name="settings_floating_button_position_title">Button position</string>
 
     <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
-    <string name="settings_floating_button_lock_title">Locked button</string>
+    <string name="settings_floating_button_lock_title">Locked position</string>
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
     <string name="settings_colors_title">Button color</string>
