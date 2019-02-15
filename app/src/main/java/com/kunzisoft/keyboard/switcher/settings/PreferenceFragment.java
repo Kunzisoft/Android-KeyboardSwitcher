@@ -38,10 +38,13 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 
     private NotificationBuilder mNotificationBuilder;
 
+    private boolean tryToOpenExternalDialog;
+
 	@Override
 	public void onResume() {
 		super.onResume();
 
+		tryToOpenExternalDialog = false;
 		// To unchecked the preference floating button if not allowed by the system
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (!Settings.canDrawOverlays(getActivity())) {
@@ -157,6 +160,7 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 			} else {
 				try {
 					/* if not construct intent to request permission */
+					tryToOpenExternalDialog = true;
 					Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
 							Uri.parse("package:" + getActivity().getPackageName()));
 					/* request permission via start activity for result */
@@ -189,6 +193,14 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             }
         }
     }
+
+	/**
+	 * Method used to not destroy the main activity when an external dialog is requested
+	 * @return 'true' if an external dialog is requested
+	 */
+	public boolean isTryingToOpenExternalDialog() {
+    	return tryToOpenExternalDialog;
+	}
 
     /*
     ------ Notification Service ------

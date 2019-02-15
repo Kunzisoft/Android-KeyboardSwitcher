@@ -90,6 +90,7 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         super.onStop();
 
         // To avoid flickering and open time
-        finish();
+        if (preferenceFragment != null && !preferenceFragment.isTryingToOpenExternalDialog())
+            finish();
     }
 }
