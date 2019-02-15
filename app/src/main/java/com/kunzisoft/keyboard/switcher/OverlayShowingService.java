@@ -141,9 +141,10 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     	// Consume the touch and click if the button is locked
         if (lockedButton) {
-			if (event.getAction() == MotionEvent.ACTION_UP)
+			if (event.getAction() == MotionEvent.ACTION_UP) {
                 view.playSoundEffect(android.view.SoundEffectConstants.CLICK);
-				onClick(view);
+                onClick(view);
+            }
 			return true;
 		}
 
