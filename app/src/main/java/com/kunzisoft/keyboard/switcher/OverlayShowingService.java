@@ -137,12 +137,13 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(View view, MotionEvent event) {
 
     	// Consume the touch and click if the button is locked
         if (lockedButton) {
 			if (event.getAction() == MotionEvent.ACTION_UP)
-				onClick(v);
+                view.playSoundEffect(android.view.SoundEffectConstants.CLICK);
+				onClick(view);
 			return true;
 		}
 
