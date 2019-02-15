@@ -84,4 +84,12 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
 		if (preferenceFragment != null)
         	preferenceFragment.stopFloatingButtonAndUncheckedButton();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // To avoid flickering and open time
+        finish();
+    }
 }
