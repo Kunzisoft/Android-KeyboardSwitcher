@@ -38,7 +38,7 @@
 
     <string name="error_overlay_permission_request">Your system is not able to open the overlay permission request dialog.</string>
 
-    <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).\n\nThe floating button may disappear if the system does not fully accept the \"Allow display over the app\" feature.\nIf so, try updating the Android version of your device. </string>
+    <string name="floating_button_warning">This feature may be unstable in last versions of Android (Lollipop and following).\n\nThe floating button may disappear if the system does not fully accept the \"Allow display over the app\" feature.</string>
     <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
 
     <string name="settings_floating_button_position_key" translatable="false">settings_floating_button_position_key</string>
