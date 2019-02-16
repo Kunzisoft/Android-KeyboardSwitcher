@@ -1,0 +1,5 @@
+ * Ajout de la position de verrouillage pour le bouton flottant
+ * Correction des clics multiples
+ * Correction du bouton flottant pour les nouveaux appareils Android
+ * Correction d'autres petits bugs
+ * Correction du crash pour Android 9
