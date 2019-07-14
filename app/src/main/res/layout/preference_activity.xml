@@ -9,21 +9,27 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/separator"/>
+        android:layout_above="@+id/test_zone_container"/>
 
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_above="@+id/test_zone"
-        android:background="@color/colorPrimary"/>
-
-    <EditText
-        android:id="@+id/test_zone"
+    <LinearLayout
+        android:id="@+id/test_zone_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:hint="@string/hint_text_test"
-        android:inputType="text" />
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorPrimary"/>
+
+        <EditText
+            android:id="@+id/test_zone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_text_test"
+            android:inputType="text"
+            android:importantForAutofill="no" />
+    </LinearLayout>
 
 </RelativeLayout>
