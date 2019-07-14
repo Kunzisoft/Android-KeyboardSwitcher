@@ -45,7 +45,7 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getBoolean(getString(R.string.app_warning_key), true)) {
             AppDialog dialogFragment = new AppDialog();
-            if (getFragmentManager() != null)
+            if (getSupportFragmentManager() != null)
                 dialogFragment.show(getSupportFragmentManager(), "application_dialog");
         }
     }
@@ -60,16 +60,14 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch ( item.getItemId() ) {
-            case R.id.menu_contribute:
-                String url = "https://www.kunzisoft.com/donation";
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW);
-                intentUrl.setData(Uri.parse(url));
-                startActivity(intentUrl);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_contribute) {
+            String url = "https://www.kunzisoft.com/donation";
+            Intent intentUrl = new Intent(Intent.ACTION_VIEW);
+            intentUrl.setData(Uri.parse(url));
+            startActivity(intentUrl);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
