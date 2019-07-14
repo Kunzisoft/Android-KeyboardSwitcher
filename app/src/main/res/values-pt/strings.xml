@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Seletor de Teclado</string>
+
+    <string name="app_warning"> Este app torna fácil a troca entre diferentes teclados se seu sistema não tem um meio eficiente de fazê-lo.\n\nNa versão Lollipop e posteriores do Android, um toque longo na barra de espaço pode fazer esta troca. Uma notificação do proprio sistema também permite a troca.\n\nNestes casos o app se torna redundante.</string>
+
+    <string name="hint_text_test">área de teste</string>
+
+    <string name="notification_keyboard_title">Selecionar teclado</string>
+    <string name="notification_keyboard_content_text">Toque para selecionar o teclado.</string>
+
+    <string name="notification_floating_button_title">Botão de teclado</string>
+    <string name="notification_floating_button_content_text">Serviço de botão flutuante de teclado ativado.</string>
+
+    <string name="general">Geral</string>
+
+    <string name="settings_ime_available_title">Teclados disponíveis</string>
+
+    <string name="settings_ime_change_title">Selecionar o teclado padrão</string>
+
+    <string name="error_unavailable_keyboard_feature">Seu sistema não é capaz de abrir a janela de seleção de teclado.</string>
+
+    <string name="startup">Inicialização</string>
+
+    <string name="settings_launch_startup_title">Abrir após a inicialização</string>
+
+    <string name="notification">Notificação</string>
+
+    <string name="settings_notification_title">Ativar notificação</string>
+    <string name="settings_notification_description">Ativar uma notificação para escolher um teclado</string>
+
+    <string name="floating_button">Botão de teclado flutuante</string>
+
+    <string name="settings_floating_button_title">Ativar botão flutuante</string>
+    <string name="settings_floating_button_description">Ativar um botão flutuante para escolher um teclado</string>
+
+    <string name="error_overlay_permission_request">Seu sistema não é capaz de abrir a tela de permissão de sobrepor outros apps.</string>
+
+    <string name="floating_button_warning">Esta função pode ser instável em versões mais recentes do Android (Lollipop e posterior).</string>
+    <string name="floating_button_notification_warning">A exibição de uma notificação adicional é essencial para manter o app visível na sua versão do Android (O e posteriores).</string>
+    <string name="floating_button_above_screen">Você deve permitir que o app se sobreponha a outros apps.</string>
+
+    <string name="settings_floating_button_position_title">Posição do botão</string>
+
+    <string name="settings_floating_button_lock_title">Travar posição</string>
+
+    <string name="settings_colors_title">Cor do botão</string>
+
+    <string name="about_title">About</string>
+    <string name="contribute">Contribute</string>
+    <string name="powered_by">Powered by</string>
+    <string name="source_code">Source code:</string>
+    <string name="about_version">Version:</string>
+    <string name="contact_title">Contact</string>
+    <string name="developer">Developer</string>
+    <string name="html_text_purpose">This app is designed to &lt;strong&gt;easily change keyboards&lt;/strong&gt;.</string>
+    <string name="html_text_free">%1$s is &lt;strong&gt;free&lt;/strong&gt;, &lt;strong&gt;libre&lt;/strong&gt; and &lt;strong&gt;without advertising&lt;/strong&gt;. It is provided as is, under &lt;strong&gt;GPLv3&lt;/strong&gt; license, without any guaranty.</string>
+    <string name="html_text_contribution">In order to &lt;strong&gt;keep our freedom&lt;/strong&gt;, &lt;strong&gt;fix bugs&lt;/strong&gt;, &lt;strong&gt;add features&lt;/strong&gt; and &lt;strong&gt;to be always active&lt;/strong&gt;, we count on your &lt;strong&gt;contribution.&lt;/strong&gt;</string>
+
+</resources>
