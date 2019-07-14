@@ -53,7 +53,7 @@
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
     <string name="settings_colors_title">Button color</string>
-    <string name="settings_colors_description">[color]</string>
+    <string name="settings_colors_description" translatable="false">[color]</string>
 
     <string name="about_title">About</string>
     <string name="contribute">Contribute</string>
