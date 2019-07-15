@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Keyboard Switcher</string>
+    <string name="app_name" translatable="false">Keyboard Switcher</string>
 
     <string name="app_warning_key" translatable="false">app_warning_key</string>
     <string name="app_warning"> This application makes it easy to switch keyboard if you do not have an effective way integrated into the operating system and the keyboard of your device.\n\nIn Lollipop and later versions of Android, a long press on the space bar of your keyboard can make it easy to change. System-managed notifications also allow this change.\n\nIn these cases, the application may be superfluous.</string>
@@ -49,7 +49,7 @@
     <string name="settings_floating_button_position_title">Button position</string>
 
     <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
-    <string name="settings_floating_button_lock_title">Locked position</string>
+    <string name="settings_floating_button_lock_title">Lock position</string>
 
     <string name="settings_colors_key" translatable="false">settings_colors_key</string>
     <string name="settings_colors_title">Button color</string>
@@ -62,7 +62,7 @@
     <string name="about_version">Version:</string>
     <string name="contact_title">Contact</string>
     <string name="developer">Developer</string>
-    <string name="html_text_purpose">This app is designed to &lt;strong&gt;easily change keyboards&lt;/strong&gt;.</string>
+    <string name="html_text_purpose">This app is designed to &lt;strong&gt;easily change keyboard&lt;/strong&gt;.</string>
     <string name="html_text_free">%1$s is &lt;strong&gt;free&lt;/strong&gt;, &lt;strong&gt;libre&lt;/strong&gt; and &lt;strong&gt;without advertising&lt;/strong&gt;. It is provided as is, under &lt;strong&gt;GPLv3&lt;/strong&gt; license, without any guaranty.</string>
     <string name="html_text_contribution">In order to &lt;strong&gt;keep our freedom&lt;/strong&gt;, &lt;strong&gt;fix bugs&lt;/strong&gt;, &lt;strong&gt;add features&lt;/strong&gt; and &lt;strong&gt;to be always active&lt;/strong&gt;, we count on your &lt;strong&gt;contribution.&lt;/strong&gt;</string>
 

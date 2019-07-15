@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_warning"> Cette application facilite le changement de clavier si vous n’avez pas de moyen efficace intégré au système d\’exploitation et au clavier de votre appareil. \n\nAvec Lollipop et versions ultérieures d\’Android, vous pouvez appuyer longuement sur la barre d\’espace de votre clavier afin de le changer facilement. Les notifications gérées par le système permettent également ce changement. \n\nDans ces cas, l\'application peut être superflue.</string>
+
+    <string name="hint_text_test">zone de test</string>
+
+    <string name="notification_keyboard_title">Changer le clavier</string>
+    <string name="notification_keyboard_content_text">Appuyer pour sélectionner le clavier par défaut.</string>
+
+    <string name="notification_floating_button_title">Bouton Clavier</string>
+    <string name="notification_floating_button_content_text">Service de bouton flottant de clavier activé.</string>
+
+    <string name="general">Général</string>
+
+    <string name="settings_ime_available_title">Claviers disponibles</string>
+
+    <string name="settings_ime_change_title">Change le clavier par défaut</string>
+
+    <string name="error_unavailable_keyboard_feature">Votre système ne peut pas ouvrir la boîte de dialogue de sélection du clavier.</string>
+
+    <string name="startup">Démarrage</string>
+
+    <string name="settings_launch_startup_title">Lancer au démarrage</string>
+
+    <string name="notification">Notification</string>
+
+    <string name="settings_notification_title">Active la notification</string>
+    <string name="settings_notification_description">Active une notification pour choisir un clavier</string>
+
+    <string name="floating_button">Bouton de clavier flottant</string>
+
+    <string name="settings_floating_button_title">Active le bouton flottant</string>
+    <string name="settings_floating_button_description">Active un bouton flottant pour choisir un clavier</string>
+
+    <string name="error_overlay_permission_request">Votre système ne peut pas ouvrir la boîte de dialogue de demande d\'autorisation de superposition.</string>
+
+    <string name="floating_button_warning">Cette fonctionnalité peut être instable dans les dernières versions d’Android (Lollipop et les suivantes).</string>
+    <string name="floating_button_notification_warning">L\'affichage d\'une notification supplémentaire est essentiel pour que le bouton reste visible dans votre version d\'Android (O et suivantes).</string>
+    <string name="floating_button_above_screen">Vous devez accepter les autorisations pour autoriser le bouton flottant a être dessiné au dessus des autres applications.</string>
+
+    <string name="settings_floating_button_position_title">Position de bouton</string>
+
+    <string name="settings_floating_button_lock_title">Verouiller la position</string>
+
+    <string name="settings_colors_title">Couleur de bouton</string>
+
+    <string name="about_title">A propos</string>
+    <string name="contribute">Contribuer</string>
+    <string name="powered_by">Propulsé par</string>
+    <string name="source_code">Code source:</string>
+    <string name="about_version">Version:</string>
+    <string name="contact_title">Contact</string>
+    <string name="developer">Développeur</string>
+    <string name="html_text_purpose">Cette application est conçue pour &lt;strong&gt;changer facilement de clavier&lt;/strong&gt;.</string>
+    <string name="html_text_free">%1$s est &lt;strong&gt;gratuit&lt;/strong&gt;, &lt;strong&gt;libre&lt;/strong&gt; et &lt;strong&gt;sans publicité&lt;/strong&gt;. Il est fourni tel quel, sous licence &lt;strong&gt;GPLv3&lt;/strong&gt;, sans aucune garantie.</string>
+    <string name="html_text_contribution">Afin de &lt;strong&gt;garder notre liberté&lt;/strong&gt;, &lt;strong&gt;corriger des bogues&lt;/strong&gt;, &lt;strong&gt;ajouter des fonctonnalités&lt;/strong&gt; et &lt;strong&gt;pour être toujours actif&lt;/strong&gt;, nous comptons sur votre &lt;strong&gt;contribution.&lt;/strong&gt;</string>
+
+</resources>
