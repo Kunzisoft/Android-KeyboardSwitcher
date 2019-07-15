@@ -1,0 +1,3 @@
+ * Changement du lien donation par un fragment contribution
+ * Ajout de la traduction française
+ * Ajout de la traduction brésilienne / portugaise

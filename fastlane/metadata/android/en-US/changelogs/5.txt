@@ -1,0 +1,3 @@
+ * Change donation link by contribution fragment
+ * Add french translation
+ * Add brazilian / portuguese translation
