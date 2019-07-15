@@ -67,7 +67,6 @@ public class PreferenceActivity extends AppCompatActivity implements WarningFloa
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragmentToShow, tagToSave)
-                .addToBackStack(null)
                 .commit();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
