@@ -1,0 +1,5 @@
+ * Add French translation
+ * Add Portuguese translation
+ * New information fragment
+ * Fix small bugs
+ * Google link policy fixed
