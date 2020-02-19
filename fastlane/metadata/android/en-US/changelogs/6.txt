@@ -1,1 +1,3 @@
  * Fix crash on boot
+ * Fix click on floating button
+ * Floating button on all screen

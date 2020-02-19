@@ -1,1 +1,3 @@
- * Correction de crash au démarrage
+ * Correction d'un crash au démarrage
+ * Correction du clic sur le bouton flottant
+ * Bouton flottant sur tous l'écran
