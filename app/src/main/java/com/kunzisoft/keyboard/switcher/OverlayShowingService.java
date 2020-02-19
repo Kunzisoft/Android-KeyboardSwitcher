@@ -9,6 +9,8 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +37,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private int yPositionToSave;
 
     private View topLeftView;
+    private View bottomRightView;
 
     private ImageView overlayedButton;
     private float offsetX;
@@ -98,7 +101,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-
+            overlayedButtonParams.gravity = Gravity.LEFT|Gravity.TOP;
             overlayedButtonParams.x = 0;
             overlayedButtonParams.y = 0;
             if (preferences.contains(X_POSITION_PREFERENCE_KEY)) {
@@ -119,11 +122,27 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
+            topLeftParams.gravity = Gravity.LEFT|Gravity.TOP;
             topLeftParams.x = 0;
             topLeftParams.y = 0;
             topLeftParams.width = 0;
             topLeftParams.height = 0;
             windowManager.addView(topLeftView, topLeftParams);
+
+            bottomRightView = new View(this);
+            LayoutParams bottomRightParams =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            bottomRightParams.gravity = Gravity.RIGHT|Gravity.BOTTOM;
+            bottomRightParams.x = 0;
+            bottomRightParams.y = 0;
+            bottomRightParams.width = 0;
+            bottomRightParams.height = 0;
+            windowManager.addView(bottomRightView, bottomRightParams);
         }
     }
 
@@ -170,6 +189,9 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             int[] topLeftLocationOnScreen = new int[2];
             topLeftView.getLocationOnScreen(topLeftLocationOnScreen);
 
+            int[] bottomRightLocationOnScreen = new int[2];
+            bottomRightView.getLocationOnScreen(bottomRightLocationOnScreen);
+
             WindowManager.LayoutParams params = (LayoutParams) overlayedButton.getLayoutParams();
 
             int newX = (int) (offsetX + x);
@@ -184,8 +206,26 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 return false;
             }
 
-            params.x = newX - (topLeftLocationOnScreen[0]);
-            params.y = newY - (topLeftLocationOnScreen[1]);
+            Log.e("Test", "New " + newX + " " + newY);
+            Log.e("Test", "View " + view.getMeasuredWidth() + " " + view.getMeasuredHeight());
+            Log.e("Test", "location " + topLeftLocationOnScreen[0] + " " + topLeftLocationOnScreen[1] + " " + topLeftView.getMeasuredWidth());
+
+            // To stick the button on the edge
+            if (newX <= view.getMeasuredWidth()) {
+                newX = 0;
+            }
+            if (newX >= bottomRightLocationOnScreen[0] - view.getMeasuredWidth()) {
+                newX = bottomRightLocationOnScreen[0];
+            }
+            if (newY <= view.getMeasuredHeight()) {
+                newY = 0;
+            }
+            if (newY >= bottomRightLocationOnScreen[1] - view.getMeasuredHeight()) {
+                newY = bottomRightLocationOnScreen[1];
+            }
+
+            params.x = newX - (topLeftLocationOnScreen[0]) - view.getMeasuredWidth()/2;
+            params.y = newY - (topLeftLocationOnScreen[1]) - view.getMeasuredHeight()/2;
             xPositionToSave = params.x;
             yPositionToSave = params.y;
 
