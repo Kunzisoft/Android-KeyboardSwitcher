@@ -135,13 +135,13 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         }
     }
 
-    private void getPositionOnScreen() {
+    private void getPositionOnScreen(MotionEvent event) {
         int[] location = new int[2];
         if (overlayedButton != null)
             overlayedButton.getLocationOnScreen(location);
 
-        originalXPos = location[0];
-        originalYPos = location[1];
+        originalXPos = (int) (location[0] + event.getX());
+        originalYPos = (int) (location[1] + event.getY());
     }
 
     private void saveYPreferencePosition() {
@@ -167,7 +167,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             moving = false;
 
-            getPositionOnScreen();
+            getPositionOnScreen(event);
 
             offsetX = originalXPos;
             offsetY = originalYPos - y;
