@@ -31,6 +31,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     private SharedPreferences preferences;
     private static final String Y_POSITION_PREFERENCE_KEY = "Y_POSITION_PREFERENCE_KEY";
+    private static final String X_POSITION_PREFERENCE_KEY = "X_POSITION_PREFERENCE_KEY";
+    private int xPositionToSave;
     private int yPositionToSave;
 
     private View topLeftView;
@@ -102,15 +104,21 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
+            /*
             if (isAtRight)
                 params.gravity = Gravity.END;
             else
                 params.gravity = Gravity.START;
+             */
 
             params.x = 0;
             params.y = 0;
+            if (preferences.contains(X_POSITION_PREFERENCE_KEY)) {
+                xPositionToSave = preferences.getInt(X_POSITION_PREFERENCE_KEY, params.y);
+                params.x = xPositionToSave;
+            }
             if (preferences.contains(Y_POSITION_PREFERENCE_KEY)) {
-                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, 0);
+                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, params.x);
                 params.y = yPositionToSave;
             }
             windowManager.addView(overlayedButton, params);
@@ -123,10 +131,12 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
+            /*
             if (isAtRight)
                 topLeftParams.gravity = Gravity.END;
             else
                 topLeftParams.gravity = Gravity.START;
+             */
             topLeftParams.x = 0;
             topLeftParams.y = 0;
             topLeftParams.width = 0;
@@ -144,8 +154,9 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         originalYPos = (int) (location[1] + event.getY());
     }
 
-    private void saveYPreferencePosition() {
+    private void savePreferencePosition() {
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(X_POSITION_PREFERENCE_KEY, xPositionToSave);
         editor.putInt(Y_POSITION_PREFERENCE_KEY, yPositionToSave);
         editor.apply();
     }
@@ -163,13 +174,14 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 			return true;
 		}
 
+		float x = event.getRawX();
 		float y = event.getRawY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             moving = false;
 
             getPositionOnScreen(event);
 
-            offsetX = originalXPos;
+            offsetX = originalXPos - x;
             offsetY = originalYPos - y;
 
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -178,7 +190,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
             WindowManager.LayoutParams params = (LayoutParams) overlayedButton.getLayoutParams();
 
-            int newX = (int) (offsetX);
+            int newX = (int) (offsetX + x);
             int newY = (int) (offsetY + y);
 
             int deltaMoveX = view.getMeasuredWidth() * 2/3;
@@ -192,12 +204,13 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
             params.x = newX - (topLeftLocationOnScreen[0]);
             params.y = newY - (topLeftLocationOnScreen[1]);
+            xPositionToSave = params.x;
             yPositionToSave = params.y;
 
             windowManager.updateViewLayout(overlayedButton, params);
             moving = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            saveYPreferencePosition();
+            savePreferencePosition();
             return moving;
         }
 
@@ -221,7 +234,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         super.onDestroy();
 
         if (overlayedButton != null) {
-            saveYPreferencePosition();
+            savePreferencePosition();
             windowManager.removeView(overlayedButton);
             windowManager.removeView(topLeftView);
             overlayedButton = null;
