@@ -1,3 +1,5 @@
- * Change donation link by contribution fragment
- * Add french translation
- * Add brazilian / portuguese translation
+ * Add French translation
+ * Add Portuguese translation
+ * New information fragment
+ * Fix small bugs
+ * Google link policy fixed

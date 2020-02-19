@@ -6,4 +6,4 @@ Dans ces cas, l'application peut être superflue et est principalement conçue p
 
 Keyboard Switcher est <b>opensource</b> et <b>sans publicité</b>.
 
-Vous avez un bug ou voulez contribuer: <a href="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher">https://gitlab.com/kunzisoft/Android-KeyboardSwitcher</a>
+Vous avez un bug : <a href="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues">https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues</a>

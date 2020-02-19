@@ -1,3 +1,5 @@
- * Changement du lien donation par un fragment contribution
  * Ajout de la traduction française
- * Ajout de la traduction brésilienne / portugaise
+ * Ajout de la traduction portugaise
+ * Nouveau fragment d'information
+ * Correction de bugs mineurs
+ * Correction de la politique de liens Google

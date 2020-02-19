@@ -6,4 +6,4 @@ In these cases, the application may be superfluous and is mostly designer for re
 
 Keyboard Switcher is <b>opensource</b> and <b>ad-free</b>.
 
-Any issue or want to contribute: <a href="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher">https://gitlab.com/kunzisoft/Android-KeyboardSwitcher</a>
+Any issue : <a href="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues">https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues</a>
