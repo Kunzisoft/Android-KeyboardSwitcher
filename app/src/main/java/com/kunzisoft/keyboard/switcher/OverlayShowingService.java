@@ -107,7 +107,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-            topLeftParams.gravity = Gravity.LEFT|Gravity.TOP;
+            topLeftParams.gravity = Gravity.START|Gravity.TOP;
             topLeftParams.x = 0;
             topLeftParams.y = 0;
             topLeftParams.width = 0;
@@ -123,7 +123,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-            bottomRightParams.gravity = Gravity.RIGHT|Gravity.BOTTOM;
+            bottomRightParams.gravity = Gravity.END|Gravity.BOTTOM;
             bottomRightParams.x = 0;
             bottomRightParams.y = 0;
             bottomRightParams.width = 0;
