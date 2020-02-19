@@ -45,9 +45,6 @@
     <string name="floating_button_notification_warning">The display of an additional notification is essential to keep the button visible in your version of Android (O and following).</string>
     <string name="floating_button_above_screen">You must accept the permissions to permit the floating button to be drawing over other apps.</string>
 
-    <string name="settings_floating_button_position_key" translatable="false">settings_floating_button_position_key</string>
-    <string name="settings_floating_button_position_title">Button position</string>
-
     <string name="settings_floating_button_lock_key" translatable="false">settings_floating_button_lock_key</string>
     <string name="settings_floating_button_lock_title">Lock position</string>
 

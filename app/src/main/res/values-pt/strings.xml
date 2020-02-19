@@ -37,8 +37,6 @@
     <string name="floating_button_notification_warning">A exibição de uma notificação adicional é essencial para manter o app visível na sua versão do Android (O e posteriores).</string>
     <string name="floating_button_above_screen">Você deve permitir que o app se sobreponha a outros apps.</string>
 
-    <string name="settings_floating_button_position_title">Posição do botão</string>
-
     <string name="settings_floating_button_lock_title">Travar posição</string>
 
     <string name="settings_colors_title">Cor do botão</string>
