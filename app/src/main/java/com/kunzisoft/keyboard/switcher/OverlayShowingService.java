@@ -9,7 +9,6 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +21,7 @@ import android.widget.ImageView;
 import com.kunzisoft.keyboard.switcher.utils.Utilities;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
@@ -33,6 +33,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private SharedPreferences preferences;
     private static final String Y_POSITION_PREFERENCE_KEY = "Y_POSITION_PREFERENCE_KEY";
     private static final String X_POSITION_PREFERENCE_KEY = "X_POSITION_PREFERENCE_KEY";
+    private static final String DRAWABLE_PREFERENCE_KEY = "DRAWABLE_PREFERENCE_KEY";
     private int xPositionToSave;
     private int yPositionToSave;
 
@@ -40,6 +41,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private View bottomRightView;
 
     private ImageView overlayedButton;
+    @DrawableRes
+    private int overlayedButtonResourceId = R.drawable.ic_keyboard_white_32dp;
     private float offsetX;
     private float offsetY;
     private int originalXPos;
@@ -82,7 +85,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
             overlayedButton = new ImageView(this);
-            @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
+            @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key),
+                    ContextCompat.getColor(this, R.color.colorPrimary));
             overlayedButton.setImageResource(R.drawable.ic_keyboard_white_32dp);
             overlayedButton.setColorFilter(color);
             overlayedButton.setAlpha((color >> 24) & 0xff);
@@ -93,6 +97,38 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 typeFilter = LayoutParams.TYPE_APPLICATION_OVERLAY;
             }
+
+            // Point reference on top left
+            topLeftView = new View(this);
+            LayoutParams topLeftParams =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            topLeftParams.gravity = Gravity.LEFT|Gravity.TOP;
+            topLeftParams.x = 0;
+            topLeftParams.y = 0;
+            topLeftParams.width = 0;
+            topLeftParams.height = 0;
+            windowManager.addView(topLeftView, topLeftParams);
+
+            // Point reference on bottom right
+            bottomRightView = new View(this);
+            LayoutParams bottomRightParams =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            bottomRightParams.gravity = Gravity.RIGHT|Gravity.BOTTOM;
+            bottomRightParams.x = 0;
+            bottomRightParams.y = 0;
+            bottomRightParams.width = 0;
+            bottomRightParams.height = 0;
+            windowManager.addView(bottomRightView, bottomRightParams);
 
             LayoutParams overlayedButtonParams =
                     new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -112,37 +148,17 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, overlayedButtonParams.x);
                 overlayedButtonParams.y = yPositionToSave;
             }
+            if (preferences.contains(DRAWABLE_PREFERENCE_KEY)) {
+                setOverlayedDrawableResource(preferences.getInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId));
+            }
             windowManager.addView(overlayedButton, overlayedButtonParams);
+        }
+    }
 
-            topLeftView = new View(this);
-            LayoutParams topLeftParams =
-                    new LayoutParams(LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT,
-                            typeFilter,
-                            LayoutParams.FLAG_NOT_FOCUSABLE
-                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                            PixelFormat.TRANSLUCENT);
-            topLeftParams.gravity = Gravity.LEFT|Gravity.TOP;
-            topLeftParams.x = 0;
-            topLeftParams.y = 0;
-            topLeftParams.width = 0;
-            topLeftParams.height = 0;
-            windowManager.addView(topLeftView, topLeftParams);
-
-            bottomRightView = new View(this);
-            LayoutParams bottomRightParams =
-                    new LayoutParams(LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT,
-                            typeFilter,
-                            LayoutParams.FLAG_NOT_FOCUSABLE
-                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                            PixelFormat.TRANSLUCENT);
-            bottomRightParams.gravity = Gravity.RIGHT|Gravity.BOTTOM;
-            bottomRightParams.x = 0;
-            bottomRightParams.y = 0;
-            bottomRightParams.width = 0;
-            bottomRightParams.height = 0;
-            windowManager.addView(bottomRightView, bottomRightParams);
+    private void setOverlayedDrawableResource(@DrawableRes int newDrawableResourceId) {
+        if (newDrawableResourceId != overlayedButtonResourceId) {
+            overlayedButtonResourceId = newDrawableResourceId;
+            overlayedButton.setImageResource(overlayedButtonResourceId);
         }
     }
 
@@ -159,6 +175,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(X_POSITION_PREFERENCE_KEY, xPositionToSave);
         editor.putInt(Y_POSITION_PREFERENCE_KEY, yPositionToSave);
+        editor.putInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId);
         editor.apply();
     }
 
@@ -206,22 +223,16 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 return false;
             }
 
-            Log.e("Test", "New " + newX + " " + newY);
-            Log.e("Test", "View " + view.getMeasuredWidth() + " " + view.getMeasuredHeight());
-            Log.e("Test", "location " + topLeftLocationOnScreen[0] + " " + topLeftLocationOnScreen[1] + " " + topLeftView.getMeasuredWidth());
-
             // To stick the button on the edge
-            if (newX <= view.getMeasuredWidth()) {
+            if (newX <= view.getMeasuredWidth() / 2) {
                 newX = 0;
+                setOverlayedDrawableResource(R.drawable.ic_keyboard_left_white_32dp);
             }
-            if (newX >= bottomRightLocationOnScreen[0] - view.getMeasuredWidth()) {
+            else if (newX >= bottomRightLocationOnScreen[0] - view.getMeasuredWidth() / 2) {
                 newX = bottomRightLocationOnScreen[0];
-            }
-            if (newY <= view.getMeasuredHeight()) {
-                newY = 0;
-            }
-            if (newY >= bottomRightLocationOnScreen[1] - view.getMeasuredHeight()) {
-                newY = bottomRightLocationOnScreen[1];
+                setOverlayedDrawableResource(R.drawable.ic_keyboard_right_white_32dp);
+            } else {
+                setOverlayedDrawableResource(R.drawable.ic_keyboard_white_32dp);
             }
 
             params.x = newX - (topLeftLocationOnScreen[0]) - view.getMeasuredWidth()/2;
