@@ -137,7 +137,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-            overlayedButtonParams.gravity = Gravity.LEFT|Gravity.TOP;
+            overlayedButtonParams.gravity = Gravity.CENTER;
             overlayedButtonParams.x = 0;
             overlayedButtonParams.y = 0;
             if (preferences.contains(X_POSITION_PREFERENCE_KEY)) {
@@ -214,8 +214,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             int newX = (int) (offsetX + x);
             int newY = (int) (offsetY + y);
 
-            int deltaMoveX = view.getMeasuredWidth() * 2/3;
-            int deltaMoveY = view.getMeasuredHeight() * 2/3;
+            int deltaMoveX = view.getMeasuredWidth() * 3/4;
+            int deltaMoveY = view.getMeasuredHeight() * 3/4;
 
             if (Math.abs(newX - originalXPos) < deltaMoveX
                     && Math.abs(newY - originalYPos) < deltaMoveY
@@ -235,8 +235,8 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 setOverlayedDrawableResource(R.drawable.ic_keyboard_white_32dp);
             }
 
-            params.x = newX - (topLeftLocationOnScreen[0]) - view.getMeasuredWidth()/2;
-            params.y = newY - (topLeftLocationOnScreen[1]) - view.getMeasuredHeight()/2;
+            params.x = newX - (bottomRightLocationOnScreen[0] + topLeftLocationOnScreen[0]) / 2;
+            params.y = newY - (bottomRightLocationOnScreen[1] + topLeftLocationOnScreen[1]) / 2;
             xPositionToSave = params.x;
             yPositionToSave = params.y;
 
