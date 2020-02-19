@@ -74,8 +74,6 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         preferenceFloatingButton = (SwitchPreference) findPreference(getString(R.string.settings_floating_button_key));
         preferenceFloatingButton.setOnPreferenceChangeListener(this);
 
-        findPreference(getString(R.string.settings_floating_button_position_key))
-                .setOnPreferenceChangeListener(this);
         findPreference(getString(R.string.settings_floating_button_lock_key))
                 .setOnPreferenceChangeListener(this);
     }
@@ -135,12 +133,6 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
 				stopFloatingButtonAndUncheckedButton();
 			}
 		}
-
-        if (preference.getKey().equals(getString(R.string.settings_floating_button_position_key))) {
-            SwitchPreference switchPreference = (SwitchPreference) preference;
-            switchPreference.setChecked((Boolean) newValue);
-            restartFloatingButtonAndCheckedButton();
-        }
 
         if (preference.getKey().equals(getString(R.string.settings_floating_button_lock_key))) {
             SwitchPreference switchPreference = (SwitchPreference) preference;

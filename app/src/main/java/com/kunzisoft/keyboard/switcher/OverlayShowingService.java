@@ -9,7 +9,6 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,18 +74,13 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
 
             // check Button Position
-            boolean isAtRight = preferences.getBoolean(getString(R.string.settings_floating_button_position_key), true);
             lockedButton = preferences.getBoolean(getString(R.string.settings_floating_button_lock_key), false);
 
             windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
             overlayedButton = new ImageView(this);
             @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
-            if (isAtRight) {
-                overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_right_36dp));
-            } else {
-                overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_left_36dp));
-            }
+            overlayedButton.setImageResource(R.drawable.ic_keyboard_white_32dp);
             overlayedButton.setColorFilter(color);
             overlayedButton.setAlpha((color >> 24) & 0xff);
             overlayedButton.setOnTouchListener(this);
@@ -97,31 +91,25 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 typeFilter = LayoutParams.TYPE_APPLICATION_OVERLAY;
             }
 
-            LayoutParams params =
+            LayoutParams overlayedButtonParams =
                     new LayoutParams(LayoutParams.WRAP_CONTENT,
                             LayoutParams.WRAP_CONTENT,
                             typeFilter,
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-            /*
-            if (isAtRight)
-                params.gravity = Gravity.END;
-            else
-                params.gravity = Gravity.START;
-             */
 
-            params.x = 0;
-            params.y = 0;
+            overlayedButtonParams.x = 0;
+            overlayedButtonParams.y = 0;
             if (preferences.contains(X_POSITION_PREFERENCE_KEY)) {
-                xPositionToSave = preferences.getInt(X_POSITION_PREFERENCE_KEY, params.y);
-                params.x = xPositionToSave;
+                xPositionToSave = preferences.getInt(X_POSITION_PREFERENCE_KEY, overlayedButtonParams.y);
+                overlayedButtonParams.x = xPositionToSave;
             }
             if (preferences.contains(Y_POSITION_PREFERENCE_KEY)) {
-                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, params.x);
-                params.y = yPositionToSave;
+                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, overlayedButtonParams.x);
+                overlayedButtonParams.y = yPositionToSave;
             }
-            windowManager.addView(overlayedButton, params);
+            windowManager.addView(overlayedButton, overlayedButtonParams);
 
             topLeftView = new View(this);
             LayoutParams topLeftParams =
@@ -131,12 +119,6 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-            /*
-            if (isAtRight)
-                topLeftParams.gravity = Gravity.END;
-            else
-                topLeftParams.gravity = Gravity.START;
-             */
             topLeftParams.x = 0;
             topLeftParams.y = 0;
             topLeftParams.width = 0;

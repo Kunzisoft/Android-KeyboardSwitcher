@@ -37,8 +37,6 @@
     <string name="floating_button_notification_warning">L\'affichage d\'une notification supplémentaire est essentiel pour que le bouton reste visible dans votre version d\'Android (O et suivantes).</string>
     <string name="floating_button_above_screen">Vous devez accepter les autorisations pour autoriser le bouton flottant a être dessiné au dessus des autres applications.</string>
 
-    <string name="settings_floating_button_position_title">Position de bouton</string>
-
     <string name="settings_floating_button_lock_title">Verouiller la position</string>
 
     <string name="settings_colors_title">Couleur de bouton</string>
