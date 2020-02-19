@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_contribute"
         android:icon="@drawable/ic_info_white_24dp"
-        android:title="@string/contribute"
+        android:title="@string/information"
         app:showAsAction="ifRoom" />
 </menu>

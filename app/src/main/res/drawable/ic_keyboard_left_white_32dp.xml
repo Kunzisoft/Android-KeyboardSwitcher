@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:right="16dp"
+        android:left="-16dp"
+        android:drawable="@drawable/ic_keyboard_white_32dp" />
+</layer-list>

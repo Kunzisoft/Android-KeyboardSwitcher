@@ -37,17 +37,16 @@
     <string name="floating_button_notification_warning">L\'affichage d\'une notification supplémentaire est essentiel pour que le bouton reste visible dans votre version d\'Android (O et suivantes).</string>
     <string name="floating_button_above_screen">Vous devez accepter les autorisations pour autoriser le bouton flottant a être dessiné au dessus des autres applications.</string>
 
-    <string name="settings_floating_button_position_title">Position de bouton</string>
-
     <string name="settings_floating_button_lock_title">Verouiller la position</string>
 
     <string name="settings_colors_title">Couleur de bouton</string>
 
     <string name="about_title">A propos</string>
-    <string name="contribute">Contribuer</string>
+    <string name="information">Information</string>
     <string name="powered_by">Propulsé par</string>
-    <string name="source_code">Code source:</string>
-    <string name="about_version">Version:</string>
+    <string name="source_code">Code source : </string>
+    <string name="contribution">Contribution : </string>
+    <string name="about_version">Version : </string>
     <string name="contact_title">Contact</string>
     <string name="developer">Développeur</string>
     <string name="html_text_purpose">Cette application est conçue pour &lt;strong&gt;changer facilement de clavier&lt;/strong&gt;.</string>

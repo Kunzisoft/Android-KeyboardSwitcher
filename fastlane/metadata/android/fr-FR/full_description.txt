@@ -4,8 +4,6 @@
 Notez que dans Lollipop et les versions ultérieures d'Android, un appui long sur la barre d'espace de votre clavier peut le rendre facile à modifier. Les notifications gérées par le système autorisent également ce changement.
 Dans ces cas, l'application peut être superflue et est principalement conçue pour des versions relativement anciennes d'Android.</i>
 
-Keyboard Switcher est <b>opensource</b> et <b>sans publicité</b>. 
-
-Vous pouvez faire un <a href="https://www.kunzisoft.com/donation">don</a> pour remercier le travail du développeur.
+Keyboard Switcher est <b>opensource</b> et <b>sans publicité</b>.
 
 Vous avez un bug : <a href="https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues">https://gitlab.com/kunzisoft/Android-KeyboardSwitcher/issues</a>

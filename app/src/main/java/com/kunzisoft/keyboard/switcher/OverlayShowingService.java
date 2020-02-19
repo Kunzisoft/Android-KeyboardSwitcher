@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.kunzisoft.keyboard.switcher.utils.Utilities;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
@@ -31,11 +32,17 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     private SharedPreferences preferences;
     private static final String Y_POSITION_PREFERENCE_KEY = "Y_POSITION_PREFERENCE_KEY";
+    private static final String X_POSITION_PREFERENCE_KEY = "X_POSITION_PREFERENCE_KEY";
+    private static final String DRAWABLE_PREFERENCE_KEY = "DRAWABLE_PREFERENCE_KEY";
+    private int xPositionToSave;
     private int yPositionToSave;
 
     private View topLeftView;
+    private View bottomRightView;
 
     private ImageView overlayedButton;
+    @DrawableRes
+    private int overlayedButtonResourceId = R.drawable.ic_keyboard_white_32dp;
     private float offsetX;
     private float offsetY;
     private int originalXPos;
@@ -73,18 +80,14 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         if (preferences.getBoolean(getString(R.string.settings_floating_button_key), false)) {
 
             // check Button Position
-            boolean isAtRight = preferences.getBoolean(getString(R.string.settings_floating_button_position_key), true);
             lockedButton = preferences.getBoolean(getString(R.string.settings_floating_button_lock_key), false);
 
             windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
             overlayedButton = new ImageView(this);
-            @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key), ContextCompat.getColor(this, R.color.colorPrimary));
-            if (isAtRight) {
-                overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_right_36dp));
-            } else {
-                overlayedButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_keyboard_left_36dp));
-            }
+            @ColorRes int color = preferences.getInt(getString(R.string.settings_colors_key),
+                    ContextCompat.getColor(this, R.color.colorPrimary));
+            overlayedButton.setImageResource(R.drawable.ic_keyboard_white_32dp);
             overlayedButton.setColorFilter(color);
             overlayedButton.setAlpha((color >> 24) & 0xff);
             overlayedButton.setOnTouchListener(this);
@@ -95,26 +98,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 typeFilter = LayoutParams.TYPE_APPLICATION_OVERLAY;
             }
 
-            LayoutParams params =
-                    new LayoutParams(LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT,
-                            typeFilter,
-                            LayoutParams.FLAG_NOT_FOCUSABLE
-                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                            PixelFormat.TRANSLUCENT);
-            if (isAtRight)
-                params.gravity = Gravity.END;
-            else
-                params.gravity = Gravity.START;
-
-            params.x = 0;
-            params.y = 0;
-            if (preferences.contains(Y_POSITION_PREFERENCE_KEY)) {
-                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, 0);
-                params.y = yPositionToSave;
-            }
-            windowManager.addView(overlayedButton, params);
-
+            // Point reference on top left
             topLeftView = new View(this);
             LayoutParams topLeftParams =
                     new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -123,30 +107,75 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                             LayoutParams.FLAG_NOT_FOCUSABLE
                                     | LayoutParams.FLAG_NOT_TOUCH_MODAL,
                             PixelFormat.TRANSLUCENT);
-            if (isAtRight)
-                topLeftParams.gravity = Gravity.END;
-            else
-                topLeftParams.gravity = Gravity.START;
+            topLeftParams.gravity = Gravity.START|Gravity.TOP;
             topLeftParams.x = 0;
             topLeftParams.y = 0;
             topLeftParams.width = 0;
             topLeftParams.height = 0;
             windowManager.addView(topLeftView, topLeftParams);
+
+            // Point reference on bottom right
+            bottomRightView = new View(this);
+            LayoutParams bottomRightParams =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            bottomRightParams.gravity = Gravity.END|Gravity.BOTTOM;
+            bottomRightParams.x = 0;
+            bottomRightParams.y = 0;
+            bottomRightParams.width = 0;
+            bottomRightParams.height = 0;
+            windowManager.addView(bottomRightView, bottomRightParams);
+
+            LayoutParams overlayedButtonParams =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT,
+                            typeFilter,
+                            LayoutParams.FLAG_NOT_FOCUSABLE
+                                    | LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                            PixelFormat.TRANSLUCENT);
+            overlayedButtonParams.gravity = Gravity.CENTER;
+            overlayedButtonParams.x = 0;
+            overlayedButtonParams.y = 0;
+            if (preferences.contains(X_POSITION_PREFERENCE_KEY)) {
+                xPositionToSave = preferences.getInt(X_POSITION_PREFERENCE_KEY, overlayedButtonParams.y);
+                overlayedButtonParams.x = xPositionToSave;
+            }
+            if (preferences.contains(Y_POSITION_PREFERENCE_KEY)) {
+                yPositionToSave = preferences.getInt(Y_POSITION_PREFERENCE_KEY, overlayedButtonParams.x);
+                overlayedButtonParams.y = yPositionToSave;
+            }
+            if (preferences.contains(DRAWABLE_PREFERENCE_KEY)) {
+                setOverlayedDrawableResource(preferences.getInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId));
+            }
+            windowManager.addView(overlayedButton, overlayedButtonParams);
         }
     }
 
-    private void getPositionOnScreen() {
+    private void setOverlayedDrawableResource(@DrawableRes int newDrawableResourceId) {
+        if (newDrawableResourceId != overlayedButtonResourceId) {
+            overlayedButtonResourceId = newDrawableResourceId;
+            overlayedButton.setImageResource(overlayedButtonResourceId);
+        }
+    }
+
+    private void getPositionOnScreen(MotionEvent event) {
         int[] location = new int[2];
         if (overlayedButton != null)
             overlayedButton.getLocationOnScreen(location);
 
-        originalXPos = location[0];
-        originalYPos = location[1];
+        originalXPos = (int) (location[0] + event.getX());
+        originalYPos = (int) (location[1] + event.getY());
     }
 
-    private void saveYPreferencePosition() {
+    private void savePreferencePosition() {
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(X_POSITION_PREFERENCE_KEY, xPositionToSave);
         editor.putInt(Y_POSITION_PREFERENCE_KEY, yPositionToSave);
+        editor.putInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId);
         editor.apply();
     }
 
@@ -163,36 +192,58 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 			return true;
 		}
 
+		float x = event.getRawX();
 		float y = event.getRawY();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             moving = false;
 
-            getPositionOnScreen();
+            getPositionOnScreen(event);
 
-            offsetX = originalXPos;
+            offsetX = originalXPos - x;
             offsetY = originalYPos - y;
 
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             int[] topLeftLocationOnScreen = new int[2];
             topLeftView.getLocationOnScreen(topLeftLocationOnScreen);
 
+            int[] bottomRightLocationOnScreen = new int[2];
+            bottomRightView.getLocationOnScreen(bottomRightLocationOnScreen);
+
             WindowManager.LayoutParams params = (LayoutParams) overlayedButton.getLayoutParams();
 
-            int newX = (int) (offsetX);
+            int newX = (int) (offsetX + x);
             int newY = (int) (offsetY + y);
 
-            if (Math.abs(newX - originalXPos) < 1 && Math.abs(newY - originalYPos) < 1 && !moving) {
+            int deltaMoveX = view.getMeasuredWidth() * 3/4;
+            int deltaMoveY = view.getMeasuredHeight() * 3/4;
+
+            if (Math.abs(newX - originalXPos) < deltaMoveX
+                    && Math.abs(newY - originalYPos) < deltaMoveY
+                    && !moving) {
                 return false;
             }
 
-            params.x = newX - (topLeftLocationOnScreen[0]);
-            params.y = newY - (topLeftLocationOnScreen[1]);
+            // To stick the button on the edge
+            if (newX <= view.getMeasuredWidth() / 2) {
+                newX = 0;
+                setOverlayedDrawableResource(R.drawable.ic_keyboard_left_white_32dp);
+            }
+            else if (newX >= bottomRightLocationOnScreen[0] - view.getMeasuredWidth() / 2) {
+                newX = bottomRightLocationOnScreen[0];
+                setOverlayedDrawableResource(R.drawable.ic_keyboard_right_white_32dp);
+            } else {
+                setOverlayedDrawableResource(R.drawable.ic_keyboard_white_32dp);
+            }
+
+            params.x = newX - (bottomRightLocationOnScreen[0] + topLeftLocationOnScreen[0]) / 2;
+            params.y = newY - (bottomRightLocationOnScreen[1] + topLeftLocationOnScreen[1]) / 2;
+            xPositionToSave = params.x;
             yPositionToSave = params.y;
 
             windowManager.updateViewLayout(overlayedButton, params);
             moving = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            saveYPreferencePosition();
+            savePreferencePosition();
             return moving;
         }
 
@@ -216,7 +267,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         super.onDestroy();
 
         if (overlayedButton != null) {
-            saveYPreferencePosition();
+            savePreferencePosition();
             windowManager.removeView(overlayedButton);
             windowManager.removeView(topLeftView);
             overlayedButton = null;
