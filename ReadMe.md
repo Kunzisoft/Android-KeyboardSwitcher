@@ -29,7 +29,7 @@ You can contribute in different ways to help me on my work.
 
 ## License
 
- Copyright (c) 2019 Jeremy Jamet / [Kunzisoft](https://www.kunzisoft.com).
+ Copyright (c) 2020 Jeremy Jamet / [Kunzisoft](https://www.kunzisoft.com).
 
  This file is part of Keyboard Switcher.
 
