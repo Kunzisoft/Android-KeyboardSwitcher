@@ -31,11 +31,11 @@ platform :android do
   lane :deploy do
     upload_to_play_store(
       track: "production",
-      skip_upload_metadata: "false",
+      skip_upload_metadata: "true",
       skip_upload_images: "false",
-      skip_upload_screenshots: "false",
+      skip_upload_screenshots: "true",
       apk: "./app/build/outputs/apk/release/app-release.apk",
-      validate_only: "true",
+      validate_only: "false",
     )
   end
 end
