@@ -9,7 +9,8 @@ public class Constants {
 
     public static final String ORGANIZATION = "Kunzisoft";
     public static final String URL_WEB_SITE = "http://kunzisoft.com/";
-    public static final String URL_CONTRIBUTION = "https://gitlab.com/kunzisoft/Android-KeyboardSwitcher";
+    public static final String URL_SOURCE_CODE = "https://gitlab.com/kunzisoft/Android-KeyboardSwitcher";
+    public static final String URL_CONTRIBUTION = "https://www.kunzisoft.com/donation.html";
 
     /**
      * Get the current package version.

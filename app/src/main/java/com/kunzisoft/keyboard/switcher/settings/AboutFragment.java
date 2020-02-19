@@ -38,7 +38,8 @@ public class AboutFragment extends Fragment {
                     "<p>" + getString(R.string.html_text_contribution) + "</p>" +
 
                     "<h2>" + getString(R.string.contact_title) + "</h2>" +
-                    "<p>" + getString(R.string.source_code) + " <a href=\"" + Constants.URL_CONTRIBUTION + "\">" + Constants.URL_CONTRIBUTION + "</a></p>" +
+                    "<p>" + getString(R.string.source_code) + " <a href=\"" + Constants.URL_SOURCE_CODE + "\">" + Constants.URL_SOURCE_CODE + "</a></p>" +
+                    "<p>" + getString(R.string.contribution) + " <a href=\"" + Constants.URL_CONTRIBUTION + "\">" + Constants.URL_CONTRIBUTION + "</a></p>" +
                     "<p>" + getString(R.string.powered_by) + " <a href=\"" + Constants.URL_WEB_SITE + "\">" + Constants.ORGANIZATION + "</a></p>";
 
             TextView aboutTextView = rootView.findViewById(R.id.activity_about_content);

@@ -56,9 +56,10 @@
     <string name="settings_colors_description" translatable="false">[color]</string>
 
     <string name="about_title">About</string>
-    <string name="contribute">Contribute</string>
+    <string name="information">Information</string>
     <string name="powered_by">Powered by</string>
     <string name="source_code">Source code:</string>
+    <string name="contribution">Contribution:</string>
     <string name="about_version">Version:</string>
     <string name="contact_title">Contact</string>
     <string name="developer">Developer</string>

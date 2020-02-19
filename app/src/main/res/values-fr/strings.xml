@@ -44,10 +44,11 @@
     <string name="settings_colors_title">Couleur de bouton</string>
 
     <string name="about_title">A propos</string>
-    <string name="contribute">Contribuer</string>
+    <string name="information">Information</string>
     <string name="powered_by">Propulsé par</string>
-    <string name="source_code">Code source:</string>
-    <string name="about_version">Version:</string>
+    <string name="source_code">Code source : </string>
+    <string name="contribution">Contribution : </string>
+    <string name="about_version">Version : </string>
     <string name="contact_title">Contact</string>
     <string name="developer">Développeur</string>
     <string name="html_text_purpose">Cette application est conçue pour &lt;strong&gt;changer facilement de clavier&lt;/strong&gt;.</string>
