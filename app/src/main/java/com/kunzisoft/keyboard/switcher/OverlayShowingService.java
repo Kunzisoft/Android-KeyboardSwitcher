@@ -181,7 +181,12 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             int newX = (int) (offsetX);
             int newY = (int) (offsetY + y);
 
-            if (Math.abs(newX - originalXPos) < 1 && Math.abs(newY - originalYPos) < 1 && !moving) {
+            int deltaMoveX = view.getMeasuredWidth() * 2/3;
+            int deltaMoveY = view.getMeasuredHeight() * 2/3;
+
+            if (Math.abs(newX - originalXPos) < deltaMoveX
+                    && Math.abs(newY - originalYPos) < deltaMoveY
+                    && !moving) {
                 return false;
             }
 
