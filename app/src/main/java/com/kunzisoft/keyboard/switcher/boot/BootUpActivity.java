@@ -23,8 +23,13 @@ public class BootUpActivity extends AppCompatActivity{
 	}
 
     private void startFloatingButtonService() {
-		startService(new Intent(this, OverlayShowingService.class));
-	}
+	    Intent overlayShowingServiceIntent = new Intent(this, OverlayShowingService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(overlayShowingServiceIntent);
+        } else {
+            startService(overlayShowingServiceIntent);
+        }
+    }
 
     @Override
     protected void onResume() {
