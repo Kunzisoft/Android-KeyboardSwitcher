@@ -1,1 +1,3 @@
- *
+ * Correction du changement d'orientation
+ * Correction de la disparition du bouton flottant
+ * Paramètre pour redimensionner le bouton flottant
