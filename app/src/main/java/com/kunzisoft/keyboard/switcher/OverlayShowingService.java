@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
@@ -34,6 +35,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
     private static final String Y_POSITION_PREFERENCE_KEY = "Y_POSITION_PREFERENCE_KEY";
     private static final String X_POSITION_PREFERENCE_KEY = "X_POSITION_PREFERENCE_KEY";
     private static final String DRAWABLE_PREFERENCE_KEY = "DRAWABLE_PREFERENCE_KEY";
+    private static final String ORIENTATION_PREFERENCE_KEY = "ORIENTATION_PREFERENCE_KEY";
     private int xPositionToSave;
     private int yPositionToSave;
 
@@ -54,7 +56,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     @Override
     public IBinder onBind(Intent intent) {
-	return null;
+	    return null;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -151,7 +153,25 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             if (preferences.contains(DRAWABLE_PREFERENCE_KEY)) {
                 setOverlayedDrawableResource(preferences.getInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId));
             }
+            int defaultSize = (int) (32 * getResources().getDisplayMetrics().density);
+            int sizeMultiplier = preferences.getInt(getString(R.string.settings_floating_size_key), 50);
+            overlayedButtonParams.width = defaultSize * sizeMultiplier / 100;
+            overlayedButtonParams.height = defaultSize * sizeMultiplier / 100;
+
             windowManager.addView(overlayedButton, overlayedButtonParams);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        int rotation = windowManager.getDefaultDisplay().getRotation();
+        if (rotation != Configuration.ORIENTATION_LANDSCAPE
+                && preferences.getInt(ORIENTATION_PREFERENCE_KEY, rotation) != Configuration.ORIENTATION_PORTRAIT)
+            setOverlayedDrawableResource(R.drawable.ic_keyboard_white_32dp);
+        else {
+            setOverlayedDrawableResource(preferences.getInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId));
         }
     }
 
@@ -176,7 +196,37 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
         editor.putInt(X_POSITION_PREFERENCE_KEY, xPositionToSave);
         editor.putInt(Y_POSITION_PREFERENCE_KEY, yPositionToSave);
         editor.putInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId);
+        editor.putInt(ORIENTATION_PREFERENCE_KEY, windowManager.getDefaultDisplay().getRotation());
         editor.apply();
+    }
+
+    private void drawButton(View view, int x, int y) {
+        int[] topLeftLocationOnScreen = new int[2];
+        topLeftView.getLocationOnScreen(topLeftLocationOnScreen);
+
+        int[] bottomRightLocationOnScreen = new int[2];
+        bottomRightView.getLocationOnScreen(bottomRightLocationOnScreen);
+
+        WindowManager.LayoutParams params = (LayoutParams) overlayedButton.getLayoutParams();
+
+        // To stick the button on the edge
+        if (x <= view.getMeasuredWidth() / 2) {
+            x = topLeftLocationOnScreen[0];
+            setOverlayedDrawableResource(R.drawable.ic_keyboard_left_white_32dp);
+        }
+        else if (x >= bottomRightLocationOnScreen[0] - view.getMeasuredWidth() / 2) {
+            x = bottomRightLocationOnScreen[0];
+            setOverlayedDrawableResource(R.drawable.ic_keyboard_right_white_32dp);
+        } else {
+            setOverlayedDrawableResource(R.drawable.ic_keyboard_white_32dp);
+        }
+
+        params.x = x - (bottomRightLocationOnScreen[0] + topLeftLocationOnScreen[0]) / 2;
+        params.y = y - (bottomRightLocationOnScreen[1] + topLeftLocationOnScreen[1]) / 2;
+        xPositionToSave = params.x;
+        yPositionToSave = params.y;
+
+        windowManager.updateViewLayout(overlayedButton, params);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -203,14 +253,6 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             offsetY = originalYPos - y;
 
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            int[] topLeftLocationOnScreen = new int[2];
-            topLeftView.getLocationOnScreen(topLeftLocationOnScreen);
-
-            int[] bottomRightLocationOnScreen = new int[2];
-            bottomRightView.getLocationOnScreen(bottomRightLocationOnScreen);
-
-            WindowManager.LayoutParams params = (LayoutParams) overlayedButton.getLayoutParams();
-
             int newX = (int) (offsetX + x);
             int newY = (int) (offsetY + y);
 
@@ -223,24 +265,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
                 return false;
             }
 
-            // To stick the button on the edge
-            if (newX <= view.getMeasuredWidth() / 2) {
-                newX = 0;
-                setOverlayedDrawableResource(R.drawable.ic_keyboard_left_white_32dp);
-            }
-            else if (newX >= bottomRightLocationOnScreen[0] - view.getMeasuredWidth() / 2) {
-                newX = bottomRightLocationOnScreen[0];
-                setOverlayedDrawableResource(R.drawable.ic_keyboard_right_white_32dp);
-            } else {
-                setOverlayedDrawableResource(R.drawable.ic_keyboard_white_32dp);
-            }
-
-            params.x = newX - (bottomRightLocationOnScreen[0] + topLeftLocationOnScreen[0]) / 2;
-            params.y = newY - (bottomRightLocationOnScreen[1] + topLeftLocationOnScreen[1]) / 2;
-            xPositionToSave = params.x;
-            yPositionToSave = params.y;
-
-            windowManager.updateViewLayout(overlayedButton, params);
+            drawButton(view, newX, newY);
             moving = true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             savePreferencePosition();

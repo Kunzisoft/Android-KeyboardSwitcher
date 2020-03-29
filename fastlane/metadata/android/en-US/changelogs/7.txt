@@ -1,0 +1,3 @@
+ * Fix orientation change
+ * Fix floating button disappearance
+ * Setting to resize the floating button

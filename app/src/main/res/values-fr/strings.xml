@@ -41,6 +41,8 @@
 
     <string name="settings_colors_title">Couleur de bouton</string>
 
+    <string name="settings_floating_size_title">Taille de bouton</string>
+
     <string name="about_title">A propos</string>
     <string name="information">Information</string>
     <string name="powered_by">Propulsé par</string>

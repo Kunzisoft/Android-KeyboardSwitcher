@@ -14,7 +14,8 @@ public class KeyboardManagerActivity extends AppCompatActivity {
 
 	public static final String DELAY_SHOW_KEY = "DELAY_SHOW_KEY";
 
-	private long delay = 200L;
+	private long delay = 250L;
+	private Runnable openPickerRunnable;
 
 	private InputMethodManager imeManager;
     private View rootView;
@@ -32,6 +33,16 @@ public class KeyboardManagerActivity extends AppCompatActivity {
         rootView = findViewById(R.id.root_view);
 		super.onCreate(savedInstanceState);
 		imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+		openPickerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (imeManager != null) {
+                    imeManager.showInputMethodPicker();
+                }
+                mState = DialogState.PICKING;
+            }
+        };
 
 		if (getIntent() != null) {
 			delay = getIntent().getLongExtra(DELAY_SHOW_KEY, delay);
@@ -52,16 +63,14 @@ public class KeyboardManagerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        rootView.removeCallbacks(openPickerRunnable);
+        rootView.postDelayed(openPickerRunnable, delay);
+    }
 
-        rootView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (imeManager != null) {
-                    imeManager.showInputMethodPicker();
-                }
-                mState = DialogState.PICKING;
-            }
-        }, delay);
+    @Override
+    protected void onPause() {
+        rootView.removeCallbacks(openPickerRunnable);
+        super.onPause();
     }
 
     @Override

@@ -52,6 +52,9 @@
     <string name="settings_colors_title">Button color</string>
     <string name="settings_colors_description" translatable="false">[color]</string>
 
+    <string name="settings_floating_size_key" translatable="false">settings_floating_size_key</string>
+    <string name="settings_floating_size_title">Button size</string>
+
     <string name="about_title">About</string>
     <string name="information">Information</string>
     <string name="powered_by">Powered by</string>
