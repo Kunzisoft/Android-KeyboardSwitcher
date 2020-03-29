@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<PreferenceCategory
 		android:title="@string/general">
@@ -48,6 +49,14 @@
             chroma:chromaColorMode="ARGB"
             chroma:chromaIndicatorMode="HEX"
             chroma:chromaInitialColor="@color/colorPrimary"/>
+		<SeekBarPreference
+			android:key="@string/settings_floating_size_key"
+			android:title="@string/settings_floating_size_title"
+			app:min="20"
+			app:defaultValue="100"
+			app:seekBarIncrement="10"
+			android:max="220"
+			android:dependency="@string/settings_floating_button_key"/>
 	</PreferenceCategory>
 
 </PreferenceScreen>

@@ -20,6 +20,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
+import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -64,17 +65,19 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
         findPreference(getString(R.string.settings_ime_change_key))
                 .setOnPreferenceClickListener(this);
 
-        preferenceNotification = (SwitchPreference) findPreference(getString(R.string.settings_notification_key));
+        preferenceNotification = findPreference(getString(R.string.settings_notification_key));
         preferenceNotification.setOnPreferenceChangeListener(this);
         if (getContext() != null) {
 			mNotificationBuilder =
 					new NotificationBuilder((NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE));
 		}
 
-        preferenceFloatingButton = (SwitchPreference) findPreference(getString(R.string.settings_floating_button_key));
+        preferenceFloatingButton = findPreference(getString(R.string.settings_floating_button_key));
         preferenceFloatingButton.setOnPreferenceChangeListener(this);
 
         findPreference(getString(R.string.settings_floating_button_lock_key))
+                .setOnPreferenceChangeListener(this);
+        findPreference(getString(R.string.settings_floating_size_key))
                 .setOnPreferenceChangeListener(this);
     }
 
@@ -139,6 +142,12 @@ public class PreferenceFragment extends ChromaPreferenceFragmentCompat
             switchPreference.setChecked((Boolean) newValue);
             restartFloatingButtonAndCheckedButton();
         }
+
+        if (preference.getKey().equals(getString(R.string.settings_floating_size_key))) {
+            SeekBarPreference seekBarPreference = (SeekBarPreference) preference;
+            seekBarPreference.setValue((int) newValue);
+			restartFloatingButtonAndCheckedButton();
+		}
 
         return false;
     }

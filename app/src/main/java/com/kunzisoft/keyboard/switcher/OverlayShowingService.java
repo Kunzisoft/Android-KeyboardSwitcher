@@ -54,7 +54,7 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
 
     @Override
     public IBinder onBind(Intent intent) {
-	return null;
+	    return null;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -151,6 +151,11 @@ public class OverlayShowingService extends Service implements OnTouchListener, O
             if (preferences.contains(DRAWABLE_PREFERENCE_KEY)) {
                 setOverlayedDrawableResource(preferences.getInt(DRAWABLE_PREFERENCE_KEY, overlayedButtonResourceId));
             }
+            int defaultSize = (int) (32 * getResources().getDisplayMetrics().density);
+            int sizeMultiplier = preferences.getInt(getString(R.string.settings_floating_size_key), 50);
+            overlayedButtonParams.width = defaultSize * sizeMultiplier / 100;
+            overlayedButtonParams.height = defaultSize * sizeMultiplier / 100;
+
             windowManager.addView(overlayedButton, overlayedButtonParams);
         }
     }
