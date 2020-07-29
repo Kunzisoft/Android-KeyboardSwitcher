@@ -14,11 +14,12 @@ public class KeyboardManagerActivity extends AppCompatActivity {
 
 	public static final String DELAY_SHOW_KEY = "DELAY_SHOW_KEY";
 
-	private long delay = 250L;
+	private long delay = 400L;
 	private Runnable openPickerRunnable;
 
 	private InputMethodManager imeManager;
     private View rootView;
+    private View progressView;
 
     enum DialogState {
         NONE, PICKING, CHOSEN
@@ -31,6 +32,7 @@ public class KeyboardManagerActivity extends AppCompatActivity {
 		mState = DialogState.NONE;
         setContentView(R.layout.empty);
         rootView = findViewById(R.id.root_view);
+        progressView = findViewById(R.id.progress);
 		super.onCreate(savedInstanceState);
 		imeManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
@@ -39,8 +41,9 @@ public class KeyboardManagerActivity extends AppCompatActivity {
             public void run() {
                 if (imeManager != null) {
                     imeManager.showInputMethodPicker();
+                    mState = DialogState.PICKING;
+                    progressView.setVisibility(View.GONE);
                 }
-                mState = DialogState.PICKING;
             }
         };
 
@@ -65,6 +68,7 @@ public class KeyboardManagerActivity extends AppCompatActivity {
         super.onResume();
         rootView.removeCallbacks(openPickerRunnable);
         rootView.postDelayed(openPickerRunnable, delay);
+        progressView.setVisibility(View.VISIBLE);
     }
 
     @Override
